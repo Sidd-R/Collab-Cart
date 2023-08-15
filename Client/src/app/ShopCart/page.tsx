@@ -373,12 +373,11 @@ export default function ShopCart() {
                             <Toggle/>
                           </span>
                         </p>
-                        <button
-                    type="submit"
-                    className="my-1 text-blue-500 text-xs w-1/6 bg-yellow-300 border border-transparent rounded-md shadow-sm  text-base text-white hover:bg-yellow-400  "
-                  >
-                    Contributors
-                  </button>
+                        <button type="submit"
+                        className="my-1 text-blue-500 text-xs w-1/6 px-3 bg-yellow-300 border border-transparent rounded-md shadow-sm  text-base text-white hover:bg-yellow-400  "
+                        >
+                          Contributors
+                        </button>
                       </div>
                     </li>
                   ))}

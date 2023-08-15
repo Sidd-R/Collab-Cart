@@ -495,6 +495,19 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
                       </a>
                     </div>
 
+<<<<<<< HEAD:Client/src/components/Navbar.jsx
+                {/* Cart */}
+                <div className="ml-2 flow-root lg:ml-6">  
+                   <Link href="/ShopCart" className="group -m-2 p-2 flex items-center">
+                    <ShoppingBagIcon
+                      className="flex-shrink-0 h-6 w-6 text-yellow-400 group-hover:text-gray-200"
+                      aria-hidden="true"
+                    />
+                    <span className="ml-2 text-sm font-medium text-white group-hover:text-orange-200">0</span>
+                    <span className="sr-only">items in cart, view bag</span>  
+                  </Link>
+                </div>
+=======
                     <div className="ml-2 flow-root lg:ml-6">
                       <Link
                         href="/ShopCart"
@@ -511,6 +524,7 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
                       </Link>
                     </div>
                   </>
+>>>>>>> 712cbb9a48704826141932661164ad2f8426258a:Client/src/components/Navbar.tsx
               </div>
             </div>
           </div>

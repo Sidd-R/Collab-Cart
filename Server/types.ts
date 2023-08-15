@@ -24,3 +24,13 @@ export type CartState = {
   totalAmount: number;
 }
 
+export type Chat = {
+  userId: string;
+  userName: string;
+  message: string;
+}
+
+export type ChatState = {
+  isChatOpen: boolean;
+  publicChat: Array<Chat>;
+}
