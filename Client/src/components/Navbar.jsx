@@ -401,7 +401,7 @@ const Navbar = () => {
 
                 {/*Room*/}
                 <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-yellow-400 hover:text-gray-200">
+                  <a href="/session" className="p-2 text-yellow-400 hover:text-gray-200">
                     <span className="sr-only">Room</span>
                     <SearchIcon className="w-6 h-6" aria-hidden="true" />
                   </a>
@@ -409,7 +409,7 @@ const Navbar = () => {
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
-                  <a href='#' className="p-2 text-yellow-400 hover:text-gray-200">
+                  <a href='/session' className="p-2 text-yellow-400 hover:text-gray-200">
                     <span className="sr-only">Search</span>
                     <SignalIcon className="w-6 h-6" aria-hidden="true" />
                   </a>
