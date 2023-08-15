@@ -5,6 +5,7 @@ import UserModal from '../components/Modal'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Navbar from '../components/Navbar'
+import Floating from '../components/Floating'
 import {Provider,useDispatch} from 'react-redux'
 import {AppDispatch, store} from './store'
 import {addUser} from './features/user/userSlice'
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Provider store={store}>
           <Navbar openModal={() => setIsModalOpen(true)} />
+          <Floating/>
           {children}
           <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </Provider>
