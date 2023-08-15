@@ -8,7 +8,7 @@ import {addUser} from '../app/features/user/userSlice'
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (userId: string, userName: string) => void;
+  // onSave: (userId: string, userName: string) => void;
 }
 
 const UserModal: React.FC<Props> = ({ isOpen, onClose }) => {

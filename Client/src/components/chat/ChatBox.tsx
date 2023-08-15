@@ -1,7 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useRouter } from 'next/router';
 import * as React from 'react';
-
 import Bubble from './Bubble';
 import ChatInput from './ChatInput';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
@@ -10,8 +8,8 @@ import { socket } from '@/app/layout';
 
 export default function ChatBox() {
   const { isChatOpen, publicChat } = useAppSelector((state) => state.chat);
+  const { userId } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  // const { pathname } = useRouter();
 
   const [isPublic, setIsPublic] = React.useState(false);
 
@@ -22,13 +20,11 @@ export default function ChatBox() {
       divRef.current.scrollTop = divRef.current.scrollHeight;
     }
   }, [isChatOpen, publicChat]);
-  let userId = 'userId';
 
   socket.on('updateChat', (data) => {
-    console.log('update chat', data)
-    dispatch(updateChat(data))
-    
-  })
+    console.log('update chat', data);
+    dispatch(updateChat(data));
+  });
 
   return (
     <span className="z-1 absolute flex w-full cursor-pointer items-center justify-end text-3xl font-bold text-bg">

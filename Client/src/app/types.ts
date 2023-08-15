@@ -33,4 +33,5 @@ export type Chat = {
 export type ChatState = {
   isChatOpen: boolean;
   publicChat: Array<Chat>;
+  showNotification: boolean;
 }
