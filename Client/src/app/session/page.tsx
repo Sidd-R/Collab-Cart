@@ -73,6 +73,6 @@ export default function Example() {
       </Dialog>
     </Transition.Root>
 
-    </div>
+</div>
   )
 }
