@@ -22,23 +22,6 @@ const room: RoomState = {
 
 const userSocket: Map<string, string> = new Map();
 
-
-export type Product = {
-  productId: string;
-  productName: string;
-  price: number;
-  quantity: number;
-  image: string;
-  addedBy: string;
-  contributors: Array<User>;
-}
-
-export type CartState = {
-  products: Array<Product>;
-  totalAmount: number;
-}
-
-
 const cart: CartState = {
   products: [],
   totalAmount: 0,
@@ -55,32 +38,32 @@ const addToCart = (product: Product) => {
     cart.products.push(product);
     cart.totalAmount += product.quantity * product.price;
   }
-}
+};
 
-const incrementItem = (product: Product) => {
+const incrementItem = (productId: string) => {
   const existingItem = cart.products.find(
-    (item) => item.productId === product.productId
+    (item) => item.productId === productId
   );
   if (existingItem) {
     existingItem.quantity += 1;
-    cart.totalAmount += product.price;
+    cart.totalAmount += existingItem.price;
   }
-}
+};
 
-const decrementItem = (product: Product) => {
+const decrementItem = (productId: string) => {
   const existingItem = cart.products.find(
-    (item) => item.productId === product.productId
+    (item) => item.productId === productId
   );
   if (existingItem?.quantity == 1) {
-    cart.totalAmount -= product.price;
+    cart.totalAmount -= existingItem.price;
     cart.products = cart.products.filter(
-      (item) => item.productId !== product.productId
+      (item) => item.productId !== productId
     );
   } else if (existingItem) {
     existingItem.quantity -= 1;
-    cart.totalAmount -= product.price;
+    cart.totalAmount -= existingItem.price;
   }
-}
+};
 
 const removeFromCart = (productId: string) => {
   const existingItem = cart.products.find(
@@ -92,10 +75,31 @@ const removeFromCart = (productId: string) => {
       (item) => item.productId !== productId
     );
   }
+};
+
+const contributeOn = (productId: string, user: User) => {
+  const existingItem = cart.products.find(
+    (item) => item.productId === productId
+  );
+  if (existingItem) {
+    existingItem.contributors.push(user);
+  }
+}
+
+const contributeOff = (productId: string, userId: string) => {
+  const existingItem = cart.products.find(
+    (item) => item.productId === productId
+  );
+  if (existingItem) {
+    existingItem.contributors = existingItem.contributors.filter(
+      (user) => user.userId !== userId
+    );
+  }
 }
 
 const clearCart = () => {
   cart.products = [];
+};
 
 io.on('connection', (socket: Socket) => {
   log('User', socket.id, 'connected');
@@ -117,10 +121,6 @@ io.on('connection', (socket: Socket) => {
     }
   );
 
-  socket.on('hello1', () => {
-    console.log('bye bye');
-  });
-
   socket.on('joinRoom', (userId: string, userName: string, roomId: string) => {
     socket.join(roomId); // join user to the room
     console.log('User', userId, 'joined room', roomId);
@@ -136,16 +136,39 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('addToCart', (product) => {
-    socket.to(room.roomId).emit('addToCart', product);
+    addToCart(product);
+    io.to(room.roomId).emit('updateCart', cart);
   });
 
-  socket.on('increment', (product) => {});
+  socket.on('increment', (productId) => {
+    incrementItem(productId);
+    io.to(room.roomId).emit('updateCart', cart);
+  });
 
-  socket.on('decrement', (product) => {});
+  socket.on('decrement', (productId) => {
+    decrementItem(productId);
+    io.to(room.roomId).emit('updateCart', cart);
+  });
 
-  socket.on('removeFromCart', (product) => {});
+  socket.on('removeFromCart', (productId) => {
+    removeFromCart(productId);
+    io.to(room.roomId).emit('updateCart', cart);
+  });
 
-  socket.on('clearCart', () => {});
+  socket.on('clearCart', () => {
+    clearCart();
+    io.to(room.roomId).emit('updateCart', cart);
+  });
+
+  socket.on('contributeOn', (productId,user: User) => {
+    contributeOn(productId,user);
+    io.to(room.roomId).emit('updateCart', cart);
+  });
+
+  socket.on('contributeOff', (productId,userId) => {
+    contributeOff(productId,userId);
+    io.to(room.roomId).emit('updateCart', cart);
+  });
 
   socket.on('disconnect', () => {
     room.users = room.users?.filter(

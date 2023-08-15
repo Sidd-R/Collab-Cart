@@ -15,12 +15,73 @@ const port = process.env.PORT || 5000;
 server.listen(port, () => {
     (0, console_1.log)('Server is running on port ' + port);
 });
+// const room: RoomState = {
+//   roomId: 'NO ROOM',
+//   users: [],
+//   admin: { userId: '', userName: '' },
+// };
+const userSocket = new Map();
+// export type Product = {
+//   productId: string;
+//   productName: string;
+//   price: number;
+//   quantity: number;
+//   image: string;
+//   addedBy: string;
+//   contributors: Array<User>;
+// }
+// export type CartState = {
+//   products: Array<Product>;
+//   totalAmount: number;
+// }
+const cart = {
+    products: [],
+    totalAmount: 0,
+};
 const room = {
     roomId: 'NO ROOM',
     users: [],
     admin: { userId: '', userName: '' },
 };
-const userSocket = new Map();
+const addToCart = (product) => {
+    const existingItem = cart.products.find((item) => item.productId === product.productId);
+    if (existingItem) {
+        existingItem.quantity += product.quantity;
+        cart.totalAmount += product.quantity * product.price;
+    }
+    else {
+        cart.products.push(product);
+        cart.totalAmount += product.quantity * product.price;
+    }
+};
+const incrementItem = (product) => {
+    const existingItem = cart.products.find((item) => item.productId === product.productId);
+    if (existingItem) {
+        existingItem.quantity += 1;
+        cart.totalAmount += product.price;
+    }
+};
+const decrementItem = (product) => {
+    const existingItem = cart.products.find((item) => item.productId === product.productId);
+    if ((existingItem === null || existingItem === void 0 ? void 0 : existingItem.quantity) == 1) {
+        cart.totalAmount -= product.price;
+        cart.products = cart.products.filter((item) => item.productId !== product.productId);
+    }
+    else if (existingItem) {
+        existingItem.quantity -= 1;
+        cart.totalAmount -= product.price;
+    }
+};
+const removeFromCart = (productId) => {
+    const existingItem = cart.products.find((item) => item.productId === productId);
+    if (existingItem) {
+        cart.totalAmount -= existingItem.quantity * existingItem.price;
+        cart.products = cart.products.filter((item) => item.productId !== productId);
+    }
+};
+const clearCart = () => {
+    cart.products = [];
+};
 io.on('connection', (socket) => {
     (0, console_1.log)('User', socket.id, 'connected');
     socket.on('createRoom', (userId, userName, getRoomId) => {
@@ -28,15 +89,17 @@ io.on('connection', (socket) => {
         (0, console_1.log)('Room created with id', roomId, 'by user', userId);
         socket.join(roomId); // join admin to the new created room
         room.roomId = roomId; // save room id
-        room.users.push({ userId, userName }); // save room id and add admin as a user
+        room.users = [{ userId, userName }]; // save room id and add admin as a user
         room.admin = { userId, userName }; // save  admin details
         getRoomId(roomId); // send room id to the admin
         io.to(roomId).emit('users', room.users, room.admin);
         userSocket.set(socket.id, userId); // save user id and socket id
+        cart.products = [];
+        cart.totalAmount = 0;
     });
-    socket.on('hello1', () => {
-        console.log('bye bye');
-    });
+    // socket.on('hello1', () => {
+    //   console.log('bye bye');
+    // });
     socket.on('joinRoom', (userId, userName, roomId) => {
         var _a;
         socket.join(roomId); // join user to the room
@@ -44,17 +107,22 @@ io.on('connection', (socket) => {
         (_a = room.users) === null || _a === void 0 ? void 0 : _a.push({ userId, userName }); // add user to the room
         io.to(roomId).emit('users', room.users, room.admin); // broadcast user data to all users in the room
     });
-    socket.on('leaveRoom', (userId, roomId) => {
-        var _a;
-        socket.leave(roomId); // leave user from the room
-        room.users = (_a = room.users) === null || _a === void 0 ? void 0 : _a.filter((user) => user.userId !== userId); // remove user from the room
-        io.to(roomId).emit('users', room.roomId); // broadcast user data to all users in the room
-    });
-    socket.on('addToCart', (product) => {
-    });
-    socket.on('disconnect', () => {
-        var _a;
-        room.users = (_a = room.users) === null || _a === void 0 ? void 0 : _a.filter((user) => user.userId !== userSocket.get(socket.id)); // remove user from the room
-        (0, console_1.log)('User', socket.id, 'disconnected');
-    });
+    // socket.on('leaveRoom', (userId: string, roomId: string) => {
+    //   socket.leave(roomId); // leave user from the room
+    //   room.users = room.users?.filter((user) => user.userId !== userId); // remove user from the room
+    //   io.to(roomId).emit('users', room.roomId); // broadcast user data to all users in the room
+    // });
+    // socket.on('addToCart', (product) => {
+    //   socket.to(room.roomId).emit('addToCart', product);
+    // });
+    // socket.on('increment', (product) => {});
+    // socket.on('decrement', (product) => {});
+    // socket.on('removeFromCart', (product) => {});
+    // socket.on('clearCart', () => {});
+    // socket.on('disconnect', () => {
+    //   room.users = room.users?.filter(
+    //     (user) => user.userId !== userSocket.get(socket.id)
+    //   ); // remove user from the room
+    //   log('User', socket.id, 'disconnected');
+    // });
 });
