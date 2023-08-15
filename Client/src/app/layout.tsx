@@ -1,10 +1,13 @@
 'use client'
 import './globals.css'
+import {useState} from 'react'
+import UserModal from '../components/Modal'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Navbar from '../components/Navbar'
-import {Provider} from 'react-redux'
-import {store} from './store'
+import {Provider,useDispatch} from 'react-redux'
+import {AppDispatch, store} from './store'
+import {addUser} from './features/user/userSlice'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -18,12 +21,15 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <Provider store={store}>
-        <Navbar />
-        {children}
+          <Navbar openModal={() => setIsModalOpen(true)} />
+          {children}
+          <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </Provider>
       </body>
     </html>
