@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { MenuIcon, SearchIcon, ShoppingBagIcon, XIcon } from '@heroicons/react/outline'
-import SignalIcon from '../../icons/SignalIcon'
+import SignalIcon from '../app/icons/SignalIcon'
 
 const navigation = {
   categories: [
@@ -417,7 +417,7 @@ const Navbar = () => {
 
                 {/* Cart */}
                 <div className="ml-2 flow-root lg:ml-6">
-                   <Link href="/pages/ShopCart.js" className="group -m-2 p-2 flex items-center">
+                   <Link href="/ShopCart" className="group -m-2 p-2 flex items-center">
                     <ShoppingBagIcon
                       className="flex-shrink-0 h-6 w-6 text-yellow-400 group-hover:text-gray-200"
                       aria-hidden="true"

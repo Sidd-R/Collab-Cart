@@ -15,11 +15,12 @@
   }
   ```
 */
+"use client";
 import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { MenuIcon, SearchIcon, ShoppingBagIcon, UserIcon, XIcon } from '@heroicons/react/outline'
 import { CheckIcon, ClockIcon } from '@heroicons/react/solid'
-import Toggle from '../components/Toggle'
+import Toggle from '../../components/Toggle'
 const navigation = {
   categories: [
     {
@@ -279,7 +280,7 @@ const footerNavigation = {
   ],
 }
 
-function classNames(...classes) {
+function classNames(...classes:string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
