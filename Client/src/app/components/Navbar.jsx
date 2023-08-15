@@ -1,8 +1,9 @@
 "use client";
+import Link from 'next/link';
 import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { MenuIcon, SearchIcon, ShoppingBagIcon, XIcon } from '@heroicons/react/outline'
-import SignalIcon from '../icons/SignalIcon'
+import SignalIcon from '../../icons/SignalIcon'
 
 const navigation = {
   categories: [
@@ -408,7 +409,7 @@ const Navbar = () => {
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-yellow-400 hover:text-gray-200">
+                  <a href='#' className="p-2 text-yellow-400 hover:text-gray-200">
                     <span className="sr-only">Search</span>
                     <SignalIcon className="w-6 h-6" aria-hidden="true" />
                   </a>
@@ -416,14 +417,14 @@ const Navbar = () => {
 
                 {/* Cart */}
                 <div className="ml-2 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 p-2 flex items-center">
+                   <Link href="/pages/ShopCart.js" className="group -m-2 p-2 flex items-center">
                     <ShoppingBagIcon
                       className="flex-shrink-0 h-6 w-6 text-yellow-400 group-hover:text-gray-200"
                       aria-hidden="true"
                     />
                     <span className="ml-2 text-sm font-medium text-white group-hover:text-orange-200">0</span>
                     <span className="sr-only">items in cart, view bag</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
