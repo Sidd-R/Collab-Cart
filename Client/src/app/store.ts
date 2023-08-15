@@ -1,15 +1,12 @@
 'use client'
 import { configureStore } from '@reduxjs/toolkit'
 import roomReducer from './features/room/roomSlice'
-// ...
+import cartReducer from './features/cart/cartSlice'
 
 export const store = configureStore({
   reducer: {
-    // socket: socketReducer,
     room: roomReducer,
-    // posts: postsReducer,
-    // comments: commentsReducer,
-    // users: usersReducer,
+    cart: cartReducer,
   },
 })
 

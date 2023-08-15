@@ -67,7 +67,7 @@ io.on('connection', (socket: Socket) => {
   });
 
   socket.on('addToCart',(product) => {
-
+    socket.to(room.roomId).emit('addToCart',product);
   })
 
   socket.on('increment',(product) => {
