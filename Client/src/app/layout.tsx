@@ -5,6 +5,8 @@ import { Inter } from 'next/font/google'
 import Navbar from '../components/Navbar'
 import {Provider} from 'react-redux'
 import {store} from './store'
+import { io } from 'socket.io-client'
+import ChatBox from '@/components/chat/ChatBox'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -13,17 +15,31 @@ export const metadata: Metadata = {
   
 }
 
+export const socket = io('http://localhost:5000',
+// {autoConnect: false, }
+)
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  
   return (
     <html lang="en">
       <body className={inter.className}>
         <Provider store={store}>
+        <div className='min-h-[65vh] w-full  pt-10  font-primary'>
+            <div className='relative mb-8 flex h-8 w-full max-w-[800px] items-center justify-between text-center'>
+              <ChatBox
+                // className='right-3 w-[calc(100%+0.5rem)] sm:right-2'
+                // label='public chat'
+              />
+            </div>
         <Navbar />
         {children}
+        </div>
+
         </Provider>
       </body>
     </html>

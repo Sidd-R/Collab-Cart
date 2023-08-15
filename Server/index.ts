@@ -3,7 +3,7 @@ import express, { Express } from 'express';
 import http, { get } from 'http';
 import { Server, Socket } from 'socket.io';
 import { v4 as uuid } from 'uuid';
-import { CartState, Product, RoomState, User } from './types';
+import { CartState, Chat, ChatState, Product, RoomState, User } from './types';
 
 const app: Express = express();
 const server = http.createServer(app);
@@ -26,6 +26,8 @@ const cart: CartState = {
   products: [],
   totalAmount: 0,
 };
+
+const messages: Array<Chat> = [];
 
 const addToCart = (product: Product) => {
   const existingItem = cart.products.find(
@@ -169,6 +171,16 @@ io.on('connection', (socket: Socket) => {
     contributeOff(productId,userId);
     io.to(room.roomId).emit('updateCart', cart);
   });
+
+  socket.on('sendChat', (chat) => {
+    log('Chat received from', chat.userId, chat.userName,chat.message);
+    messages.push(chat);
+    io.
+    // to(room.roomId).
+    emit('updateChat', messages);
+
+  })
+
 
   socket.on('disconnect', () => {
     room.users = room.users?.filter(
