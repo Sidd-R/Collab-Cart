@@ -1,5 +1,7 @@
 'use client'
 import './globals.css'
+import {useState} from 'react'
+import UserModal from '../components/Modal'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Navbar from '../components/Navbar'
@@ -25,6 +27,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -36,10 +40,12 @@ export default function RootLayout({
                 // label='public chat'
               />
             </div>
-        <Navbar />
-        {children}
-        </div>
 
+
+          <Navbar openModal={() => setIsModalOpen(true)} />
+          {children}
+          <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        </div>
         </Provider>
       </body>
     </html>
