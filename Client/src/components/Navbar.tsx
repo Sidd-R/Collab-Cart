@@ -197,7 +197,10 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
                   <div className="border-t border-b border-gray-200 py-6 px-4 space-y-6">
                   <div className="flow-root">
                     <a
-                      onClick={openModal}
+                      onClick={()=>{
+                        setOpen(false);
+                        openModal();
+                      }}
                       className="-m-2 p-2 block font-medium text-white"
                     >
                       Sign in

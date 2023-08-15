@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import {Provider,useDispatch} from 'react-redux'
-import {AppDispatch} from '../app/store'
-import {addUser} from '../app/features/user/userSlice'
+import React, { useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { Provider, useDispatch } from "react-redux";
+import { AppDispatch } from "../app/store";
+import { addUser } from "../app/features/user/userSlice";
 
 interface Props {
   isOpen: boolean;
@@ -12,15 +12,17 @@ interface Props {
 }
 
 const UserModal: React.FC<Props> = ({ isOpen, onClose }) => {
-  const [userId, setUserId] = useState('');
-  const [userName, setUserName] = useState('');
+  const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
 
   const dispatch = useDispatch<AppDispatch>();
   const handleSave = () => {
-    dispatch(addUser({
-      userId: userId,
-      userName: userName
-    }));
+    dispatch(
+      addUser({
+        userId: userId,
+        userName: userName,
+      })
+    );
     onClose();
   };
 
@@ -41,7 +43,10 @@ const UserModal: React.FC<Props> = ({ isOpen, onClose }) => {
               <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
             </Transition.Child>
 
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+            <span
+              className="hidden sm:inline-block sm:align-middle sm:h-screen"
+              aria-hidden="true"
+            >
               &#8203;
             </span>
             <Transition.Child
@@ -53,19 +58,36 @@ const UserModal: React.FC<Props> = ({ isOpen, onClose }) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
+              <div className="inline-block z-100 align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-sm sm:w-full sm:p-6">
                 <div>
                   <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-                    <svg className="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    <svg
+                      className="h-6 w-6 text-green-600"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M5 13l4 4L19 7"
+                      />
                     </svg>
                   </div>
                   <div className="mt-3 text-center sm:mt-5">
-                    <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg leading-6 font-medium text-gray-900"
+                    >
                       Add User
                     </Dialog.Title>
                     <div className="mt-2">
-                      <label htmlFor="userId" className="block text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="userId"
+                        className="block text-sm font-medium text-gray-700"
+                      >
                         User ID
                       </label>
                       <input
@@ -78,7 +100,10 @@ const UserModal: React.FC<Props> = ({ isOpen, onClose }) => {
                       />
                     </div>
                     <div className="mt-2">
-                      <label htmlFor="userName" className="block text-sm font-medium text-gray-700">
+                      <label
+                        htmlFor="userName"
+                        className="block text-sm font-medium text-gray-700"
+                      >
                         User Name
                       </label>
                       <input
