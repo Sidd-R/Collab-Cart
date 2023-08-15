@@ -265,7 +265,7 @@ const Navbar = () => {
 
       <header className="relative bg-blue-500">
         <nav aria-label="Top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="border-b border-gray-200">
+          <div>
             <div className="h-16 flex items-center">
               <button
                 type="button"
