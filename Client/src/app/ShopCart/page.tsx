@@ -1,26 +1,14 @@
-/*
-  This example requires Tailwind CSS v2.0+ 
-  
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
-*/
 "use client";
 import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { MenuIcon, SearchIcon, ShoppingBagIcon, UserIcon, XIcon } from '@heroicons/react/outline'
 import { CheckIcon, ClockIcon } from '@heroicons/react/solid'
 import Toggle from '../../components/Toggle'
+import { useAppSelector } from '../hooks';
+import { Product } from '../types';
+import { Switch } from '@headlessui/react'
+import { socket } from '../layout';
+
 const navigation = {
   categories: [
     {
@@ -206,27 +194,33 @@ const navigation = {
     { name: 'Stores', href: '#' },
   ],
 }
-const products = [
+const products: Array<Product>= [
   {
-    id: 1,
-    name: 'Nomad Tumbler',
-    href: '#',
-    price: '$35.00',
-    color: 'White',
-    inStock: true,
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
-    imageAlt: 'Insulated bottle with white base and black snap lid.',
+    productId: '1',
+    productName: 'Nomad Tumbler',
+    // href: '#',
+    price: 35.00,
+    // color: 'White',
+    // inStock: true,
+    image: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-03.jpg',
+    // imageAlt: 'Insulated bottle with white base and black snap lid.',
+    addedBy: 'sidd-r',
+    contributors: [{userName:'Faiz07',userId:'99'},{userName:'sidd-r',userId:'109'}],
+    quantity: 4
   },
   {
-    id: 2,
-    name: 'Basic Tee',
-    href: '#',
-    price: '$32.00',
-    color: 'Sienna',
-    inStock: true,
-    size: 'Large',
-    imageSrc: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in sienna.",
+    productId: '2',
+    productName: 'Basic Tee',
+    // href: '#',
+    price: 32.00,
+    // color: 'Sienna',
+    // inStock: true,
+    // size: 'Large',
+    image: 'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-01-product-01.jpg',
+    // imageAlt: "Front of men's Basic Tee in sienna.",
+    addedBy: 'Faiz07',
+    contributors: [{userName:'Faiz07',userId:'99'} ],
+    quantity: 1
   },
   // More products...
 ]
@@ -286,6 +280,8 @@ function classNames(...classes:string[]) {
 
 export default function ShopCart() {
   const [open, setOpen] = useState(false)
+  const {userId} = useAppSelector(state => state.user)
+  // const {products,totalAmount} = useAppSelector(state => state.cart)
 
   return (
     <div className="bg-white">
@@ -314,11 +310,11 @@ export default function ShopCart() {
 
                 <ul role="list" className="border-t border-b border-gray-200 divide-y divide-gray-200">
                   {products.map((product, productIdx) => (
-                    <li key={product.id} className="flex py-20 sm:py-10">
+                    <li key={product.productId} className="flex py-20 sm:py-10">
                       <div className="flex-shrink-0">
                         <img
-                          src={product.imageSrc}
-                          alt={product.imageAlt}
+                          src={product.image}
+                          alt={'product image'}
                           className="w-2 h-2 rounded-lg object-center object-cover sm:w-16 sm:h-16"
                         />
                       </div>
@@ -328,24 +324,25 @@ export default function ShopCart() {
                           <div className="flex justify-between sm:grid sm:grid-cols-2">
                             <div className="pr-6">
                               <h3 className="text-sm">
-                                <a href={product.href} className="font-medium text-gray-700 hover:text-gray-800">
-                                  {product.name}
-                                </a>
+                                {/* <a href={product.href} className="font-medium text-gray-700 hover:text-gray-800"> */}
+                                  {product.productName}
+                                {/* </a> */}
                               </h3>
-                              <p className="mt-1 text-sm text-gray-500">{product.color}</p>
-                              {product.size ? <p className="mt-1 text-sm text-gray-500">{product.size}</p> : null}
+                              {/* <p className="mt-1 text-sm text-gray-500">{product.color}</p> */}
+                              {/* {product.size ? <p className="mt-1 text-sm text-gray-500">{product.size}</p> : null} */}
                             </div>
 
-                            <p className="text-sm font-medium text-gray-900 text-right">{product.price}</p>
+                            <p className="text-sm font-medium text-gray-900 text-right">Rs. {product.price}</p>
                           </div>
 
                           <div className="mt-4 flex items-center sm:block sm:absolute sm:top-0 sm:left-1/2 sm:mt-0">
                             <label htmlFor={`quantity-${productIdx}`} className="sr-only">
-                              Quantity, {product.name}
+                              Quantity, {product.productName}
                             </label>
                             <select
                               id={`quantity-${productIdx}`}
                               name={`quantity-${productIdx}`}
+                              value={product.quantity}
                               className="block max-w-full rounded-md border border-gray-300 py-1.5 text-base leading-5 font-medium text-gray-700 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                             >
                               <option value={1}>1</option>
@@ -370,10 +367,39 @@ export default function ShopCart() {
                           Added by Faiz07
                           <span className='flex'>
                             Contribute
-                            <Toggle/>
+                            <Switch
+      checked={product.contributors.find(contributor => contributor.userId === userId) ? true : false}
+      onChange={() => {
+        if(product.contributors.find(contributor => contributor.userId === userId)){
+          // remove user from contributors
+          socket.emit('contributeOff',{productId:product.productId,userId:userId})
+        }else{
+          // add user to contributors
+          socket.emit('contributeOn',{productId:product.productId,userId:userId})
+        }
+      }}
+      className="flex-shrink-0 group relative rounded-full inline-flex items-center justify-center h-5 w-10 cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ml-5"
+    >
+      <span className="sr-only">Use setting</span>
+      <span aria-hidden="true" className="pointer-events-none absolute bg-white w-full h-full rounded-md" />
+      <span
+        aria-hidden="true"
+        className={classNames(
+          product.contributors.find(contributor => contributor.userId === userId) ? 'bg-blue-500' : 'bg-yellow-300',
+          'pointer-events-none absolute h-4 w-9 mx-auto rounded-full transition-colors ease-in-out duration-200'
+        )}
+      />
+      <span
+        aria-hidden="true"
+        className={classNames(
+          product.contributors.find(contributor => contributor.userId === userId) ? 'translate-x-5' : 'translate-x-0',
+          'pointer-events-none absolute left-0 inline-block h-5 w-5 border border-gray-200 rounded-full bg-white shadow transform ring-0 transition-transform ease-in-out duration-200'
+        )}
+      />
+    </Switch>
                           </span>
                         </p>
-                        <button type="submit"
+                        <button 
                         className="my-1 text-blue-500 text-xs w-1/6 px-3 bg-yellow-300 border border-transparent rounded-md shadow-sm  text-base text-white hover:bg-yellow-400  "
                         >
                           Contributors
@@ -447,14 +473,14 @@ export default function ShopCart() {
         </section>
       </main>
 
-      <footer aria-labelledby="footer-heading" className="bg-gray-50">
+      {/*
+       <footer aria-labelledby="footer-heading" className="bg-gray-50">
         <h2 id="footer-heading" className="sr-only">
           Footer
         </h2>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="border-t border-gray-200 py-20">
             <div className="grid grid-cols-1 md:grid-cols-12 md:grid-flow-col md:gap-x-8 md:gap-y-16 md:auto-rows-min">
-              {/* Image section */}
               <div className="col-span-1 md:col-span-2 lg:row-start-1 lg:col-start-1">
                 <img
                   src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
@@ -463,7 +489,6 @@ export default function ShopCart() {
                 />
               </div>
 
-              {/* Sitemap sections */}
               <div className="mt-10 col-span-6 grid grid-cols-2 gap-8 sm:grid-cols-3 md:mt-0 md:row-start-1 md:col-start-3 md:col-span-8 lg:col-start-2 lg:col-span-6">
                 <div className="grid grid-cols-1 gap-y-12 sm:col-span-2 sm:grid-cols-2 sm:gap-x-8">
                   <div>
@@ -505,7 +530,6 @@ export default function ShopCart() {
                 </div>
               </div>
 
-              {/* Newsletter section */}
               <div className="mt-12 md:mt-0 md:row-start-2 md:col-start-3 md:col-span-8 lg:row-start-1 lg:col-start-9 lg:col-span-4">
                 <h3 className="text-sm font-medium text-gray-900">Sign up for our newsletter</h3>
                 <p className="mt-6 text-sm text-gray-500">The latest deals and savings, sent to your inbox weekly.</p>
@@ -537,7 +561,7 @@ export default function ShopCart() {
             <p className="text-sm text-gray-500">&copy; 2021 Workflow, Inc. All rights reserved.</p>
           </div>
         </div>
-      </footer>
+      </footer> */}
     </div>
   )
 }

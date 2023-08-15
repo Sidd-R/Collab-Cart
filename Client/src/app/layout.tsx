@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 }
 
 export const socket = io('http://localhost:5000',
-// {autoConnect: false, }
+{autoConnect: false, }
 )
 
 export default function RootLayout({

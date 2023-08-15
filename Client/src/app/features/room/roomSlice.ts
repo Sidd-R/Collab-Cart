@@ -17,7 +17,7 @@ export const roomSlice = createSlice({
       state.admin =   action.payload.userId;
     },
     joinRoom: (state,action) => {
-      state.roomId = action.payload.roomId;
+      state.roomId = action.payload;
     },
     updateRoom: (state,action) => {
       state.users = action.payload.users2;
