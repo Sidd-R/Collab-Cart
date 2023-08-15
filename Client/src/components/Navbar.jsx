@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { MenuIcon, SearchIcon, ShoppingBagIcon, XIcon } from '@heroicons/react/outline'
-import SignalIcon from '../icons/SignalIcon'
+import SignalIcon from '../app/icons/SignalIcon'
 
 const navigation = {
   categories: [

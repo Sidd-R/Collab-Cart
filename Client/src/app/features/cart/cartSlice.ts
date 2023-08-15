@@ -1,4 +1,3 @@
-import { socket } from '@/app/layout';
 import { CartState, Product } from '@/app/types';
 import { createSlice } from '@reduxjs/toolkit';
 
