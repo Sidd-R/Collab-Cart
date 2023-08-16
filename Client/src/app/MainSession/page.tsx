@@ -2,7 +2,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import {
+import { MicrophoneIcon, ChatAltIcon, ArrowsExpandIcon } from '@heroicons/react/solid';
     CalendarIcon,
     ChartBarIcon,
     ChatIcon,
@@ -204,7 +204,7 @@ export default function Example() {
                                             {users.map((person) => (
                                                 <li key={person.userId} className="py-10 px-4 bg-white text-center rounded-lg xl:px-2 ">
                                                     <div className="space-y-6 xl:space-y-5">
-                                                        <span>Mic</span>
+                                                       <MicrophoneIcon className="h-2 w-2" aria-hidden="true" />
                                                         <img className="mx-auto h-20 w-20 rounded-full xl:w-40 xl:h-40" src={imageUrl} alt="" />
                                                         <div className="font-medium text-lg leading-6 space-y-1">
                                                             <h3 className="text-blue-500 mx-auto">{person.userName}</h3>
