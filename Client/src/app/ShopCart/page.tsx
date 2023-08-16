@@ -250,6 +250,38 @@ export default function ShopCart() {
                         >
                           Contributors
                         </button>
+                        {contriModal ? (
+                          <>
+                            <div className="flex overflow-x-hidden overflow-y-auto fixed inset-0 ">
+                              <div className="relative w-auto my-5 mx-auto  max-w-3xl">
+                                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-64 bg-white outline-none focus:outline-none">
+                                  <div className='flex justify-between mx-2 my-1'>
+                                    <span>Contributors</span>
+                                    <button onClick={() => setContriModal(false)}>X</button>
+                                  </div>
+                                  <div className="flex p-6 border-t border-solid border-blueGray-200 rounded-b ">
+                                    <div className="flow-root">
+                                      <ul role="list" className="-my-5 divide-y divide-gray-200">
+                                        {product.contributors.map((person, i) => (
+                                          <li key={i} className="py-4">
+                                            <div className="flex  space-x-4">
+                                              <div className="flex-shrink-0">
+                                                <img className="h-8 w-8 rounded-full" src={"https://cdn-icons-png.flaticon.com/512/149/149071.png"} alt="" />
+                                              </div>
+                                              <div className="flex-1 min-w-0">
+                                                <p className="text-sm font-medium text-gray-900 truncate">{person.userName}</p>
+                                              </div>
+                                            </div>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        ) : null}
                       </div>
                     </li>
                   ))}

@@ -200,17 +200,18 @@ export default function Example() {
                             <MenuIcon className="h-6 w-6" aria-hidden="true" />
                         </button>
                     </div>
-                    <main className="flex-1 bg-gray-300">
+                    <main className="flex-1 bg-gray-200 h-600">
                         <div className="py-4 h-full">
-                            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                                <h1 className="text-4xl font-semibold text-gray-900  ">Virtual Shopping Room</h1>
+                            <div className="flex items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                                <h1 className="flex text-4xl font-semibold text-gray-900 items-center ">Virtual Shopping Room</h1>
                             </div>
                             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                                 <div className="mx-auto py-4 px-4 max-w-7xl sm:px-6 lg:px-8 lg:py-12">
                                         <ul role="list" className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:space-y-0 lg:grid-cols-3 lg:gap-8">
                                             {users.map((person) => (
-                                                <li key={person.userId} className="py-10 px-4 bg-gray-200 text-center rounded-lg xl:px-2 ">
+                                                <li key={person.userId} className="py-10 px-4 bg-white text-center rounded-lg xl:px-2 ">
                                                     <div className="space-y-6 xl:space-y-5">
+                                                        <span>Mic</span>
                                                         <img className="mx-auto h-20 w-20 rounded-full xl:w-40 xl:h-40" src={imageUrl} alt="" />
                                                         <div className="font-medium text-lg leading-6 space-y-1">
                                                             <h3 className="text-blue-500 mx-auto">{person.userName}</h3>

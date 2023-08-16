@@ -1,5 +1,6 @@
 "use client";
 import { Fragment, useState } from 'react'
+import Link from 'next/link';
 import { Dialog, Disclosure, Popover, RadioGroup, Tab, Transition } from '@headlessui/react'
 import {
   HeartIcon,
@@ -174,8 +175,8 @@ export default function Page({ params }: { params: { id: string } }) {
               <button onClick={()=>setShowModal(false)}>X</button>
               </div>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  
-                  <button
+                  <Link href="/ShopCart">
+                  <span
                     className="text-white bg-blue-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     onClick={() => {
                       const newProduct:Product = {
@@ -194,8 +195,8 @@ export default function Page({ params }: { params: { id: string } }) {
                     }}
                   >
                     Add To Mutual Cart
-                  </button>
-                  
+                  </span>
+                  </Link>
                   <button
                     className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                   >
