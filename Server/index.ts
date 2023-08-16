@@ -4,15 +4,15 @@ import http, { get } from 'http';
 import { Server, Socket } from 'socket.io';
 import { v4 as uuid } from 'uuid';
 import { CartState, Chat, ChatState, Product, RoomState, User } from './types';
+import cors from 'cors';
 
 const app: Express = express();
+app.use(cors())
+
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: '*' } });
+const io = new Server(server, { cors:{origin:'*'}});
 
 const port = process.env.PORT || 5000;
-server.listen(port, () => {
-  log('Server is running on port ' + port);
-});
 
 const room: RoomState = {
   roomId: 'NO ROOM',
@@ -219,4 +219,8 @@ io.on('connection', (socket: Socket) => {
     ); // remove user from the room
     log('User', socket.id, 'disconnected');
   });
+});
+
+server.listen(port, () => {
+  log('Server is running on port ' + port);
 });
