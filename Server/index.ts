@@ -27,7 +27,7 @@ const cart: CartState = {
   totalAmount: 0,
 };
 
-const messages: Array<Chat> = [];
+var messages: Array<Chat> = [];
 
 const addToCart = (product: Product) => {
   const existingItem = cart.products.find(
@@ -128,7 +128,7 @@ io.on('connection', (socket: Socket) => {
 
   socket.on(
     'createRoom',
-    (userId: string, userName: string, getRoomId: (roomId: string) => void) => {
+    ({userName,userId}: User, getRoomId: (roomId: string) => void) => {
       const roomId = uuid().slice(0, 6); // create new room
       log('Room created with id', roomId, 'by user', userId);
       socket.join(roomId); // join admin to the new created room
@@ -140,10 +140,11 @@ io.on('connection', (socket: Socket) => {
       userSocket.set(socket.id, userId); // save user id and socket id
       cart.products = [];
       cart.totalAmount = 0;
+      messages = [];
     }
   );
 
-  socket.on('joinRoom', (userId: string, userName: string, roomId: string) => {
+  socket.on('joinRoom', ({userId, userName}:User, roomId: string) => {
     socket.join(roomId); // join user to the room
     console.log('User', userId, 'joined room', roomId);
 
