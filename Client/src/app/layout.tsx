@@ -12,6 +12,7 @@ import {store} from './store'
 import { io } from 'socket.io-client'
 import ChatBox from '@/components/chat/ChatBox'
 import { useAppDispatch } from './hooks'
+import Footer from '@/components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -48,6 +49,7 @@ export default function RootLayout({
           <Navbar openModal={() => setIsModalOpen(true)} />
           <Floating/>
           {children}
+          <Footer/>
           <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
         </Provider>

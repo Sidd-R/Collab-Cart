@@ -47,7 +47,7 @@ export default function Example() {
                   </div>
                   <p className="mt-1 text-sm text-gray-500">{product.reviewCount} reviews</p>
                 </div>
-                <p className="mt-4 text-base font-medium text-gray-900">{product.price}</p>
+                <p className="mt-4 text-base font-medium text-gray-900">₹ {product.price}</p>
               </div>
             </div>
           ))}

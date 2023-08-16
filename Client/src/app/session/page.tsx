@@ -5,8 +5,9 @@ import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/outline';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { socket } from '../layout';
-import { createRoom, joinRoom } from '../features/room/roomSlice';
+import { createRoom, joinRoom, updateRoom } from '../features/room/roomSlice';
 import { useRouter } from 'next/navigation';
+import { updateCart } from '../features/cart/cartSlice';
 
 export default function Example() {
   const [open, setOpen] = useState<boolean>(true);
@@ -41,6 +42,20 @@ export default function Example() {
     if (open == false) router.push('/MainSession');
   
   }, [open])
+
+  socket.on('updateRoom' , (room) => {
+    console.log("why not wprl");    
+    
+    dispatch(updateRoom(room))
+    // console.log(users,room);
+    
+  })
+
+  socket.on('updateCart' , (cart) => {
+      dispatch(updateCart({cart,userId}))
+      console.log('update cart');
+      
+  })
   
 
   return (

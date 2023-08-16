@@ -99,6 +99,26 @@ const contributeOff = (productId: string, userId: string) => {
   }
 }
 
+const contributeAll = (user:User) => {
+  cart.products.forEach((product: Product) => {
+    if (!product.contributors.find((user) => user.userId === user.userId)) {
+      product.contributors.push(user);
+    }
+  })
+}
+
+// remove user as a contributor in all products if the user is a contributor
+const contributeAllOff = (user: User) => {
+  cart.products.forEach((product: Product) => {
+    if (product.contributors.find((user1) => user1.userId === user.userId)) {
+      product.contributors = product.contributors.filter(
+        (user2) => user2.userId !== user.userId
+      );
+    }
+  })
+}
+
+
 const clearCart = () => {
   cart.products = [];
 };
@@ -129,6 +149,7 @@ io.on('connection', (socket: Socket) => {
 
     room.users?.push({ userId, userName }); // add user to the room
     io.to(roomId).emit('updateRoom', room); // broadcast user data to all users in the room
+    io.to(roomId).emit('updateCart', cart);
   });
 
   socket.on('leaveRoom', (userId: string, roomId: string) => {
@@ -169,6 +190,15 @@ io.on('connection', (socket: Socket) => {
 
   socket.on('contributeOff', (productId,userId) => {
     contributeOff(productId,userId);
+    io.to(room.roomId).emit('updateCart', cart);
+  });
+  socket.on('contributeAll', (user) => {
+    contributeAll(user);
+    io.to(room.roomId).emit('updateCart', cart);
+  });
+
+  socket.on('contributeAllOff', (user) => {
+    contributeAllOff(user);
     io.to(room.roomId).emit('updateCart', cart);
   });
 

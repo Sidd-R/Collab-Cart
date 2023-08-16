@@ -22,6 +22,7 @@ export type Product = {
 export type CartState = {
   products: Array<Product>;
   totalAmount: number;
+  personalAmount: number;
 }
 
 export type Chat = {
