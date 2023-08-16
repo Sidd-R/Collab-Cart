@@ -27,7 +27,7 @@ const navigation = [
     { name: 'Room Members', href: '#', icon: UsersIcon, current: true },
     { name: 'Chat', href: '#', icon: ChatIcon, current: false },
     { name: 'Mutual Cart', href: '/ShopCart', icon: ShoppingBagIcon, current: false },
-    { name: 'Virtual Trial Room', href: '#', icon: SwitchVerticalIcon, current: false },
+    { name: 'Virtual Trial Room', href: '/TryItemOn', icon: SwitchVerticalIcon, current: false },
     { name: 'Poll', href: '#', icon: ChartBarIcon, current: false },
 ]
 
