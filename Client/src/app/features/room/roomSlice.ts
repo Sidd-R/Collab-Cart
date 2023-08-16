@@ -20,8 +20,10 @@ export const roomSlice = createSlice({
       state.roomId = action.payload;
     },
     updateRoom: (state,action) => {
-      state.users = action.payload.users2;
-      state.admin = action.payload.admin2;      
+      console.log("why ot ",action.payload);
+      
+      state.admin = action.payload.admin;
+      state.users = action.payload.users;
     }
   },
 });

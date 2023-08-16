@@ -116,7 +116,7 @@ io.on('connection', (socket: Socket) => {
       room.users = [{ userId, userName }]; // save room id and add admin as a user
       room.admin = { userId, userName }; // save  admin details
       getRoomId(roomId); // send room id to the admin
-      io.to(roomId).emit('users', room.users, room.admin);
+      io.to(roomId).emit('updateRoom', room);
       userSocket.set(socket.id, userId); // save user id and socket id
       cart.products = [];
       cart.totalAmount = 0;
@@ -128,13 +128,13 @@ io.on('connection', (socket: Socket) => {
     console.log('User', userId, 'joined room', roomId);
 
     room.users?.push({ userId, userName }); // add user to the room
-    io.to(roomId).emit('users', room.users, room.admin); // broadcast user data to all users in the room
+    io.to(roomId).emit('updateRoom', room); // broadcast user data to all users in the room
   });
 
   socket.on('leaveRoom', (userId: string, roomId: string) => {
     socket.leave(roomId); // leave user from the room
     room.users = room.users?.filter((user) => user.userId !== userId); // remove user from the room
-    io.to(roomId).emit('users', room.roomId); // broadcast user data to all users in the room
+    io.to(roomId).emit('updateRoom', room); // broadcast user data to all users in the room
   });
 
   socket.on('addToCart', (product) => {

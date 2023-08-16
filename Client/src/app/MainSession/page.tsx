@@ -15,6 +15,10 @@ import {
     UsersIcon,
     XIcon,
 } from '@heroicons/react/outline'
+import { useAppDispatch, useAppSelector } from '../hooks';
+import Image from 'next/image';
+import { socket } from '../layout';
+import { updateRoom } from '../features/room/roomSlice';
 
 const navigation = [
     { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -43,8 +47,22 @@ const people = [
     },
 ]
 
+const imageUrl = 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
+
 export default function Example() {
     const [sidebarOpen, setSidebarOpen] = useState(false)
+    const dispatch = useAppDispatch()
+    const {admin,users} = useAppSelector(state => state.room);
+
+    // const {users} = useAppSelector(state => state.room)
+    socket.on('updateRoom' , (room) => {
+        console.log("why not wprl");    
+        
+      dispatch(updateRoom(room))
+      console.log(users,room);
+      
+    })
+
 
     return (
         <>
@@ -183,13 +201,15 @@ export default function Example() {
                             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                                 <div className="mx-auto py-4 px-4 max-w-7xl sm:px-6 lg:px-8 lg:py-12">
                                         <ul role="list" className="space-y-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:space-y-0 lg:grid-cols-3 lg:gap-8">
-                                            {people.map((person) => (
-                                                <li key={person.name} className="py-10 px-4 bg-gray-200 text-center rounded-lg xl:px-2 ">
+                                            {users.map((person) => (
+                                                <li key={person.userId} className="py-10 px-4 bg-gray-200 text-center rounded-lg xl:px-2 ">
                                                     <div className="space-y-6 xl:space-y-5">
-                                                        <img className="mx-auto h-20 w-20 rounded-full xl:w-40 xl:h-40" src={person.imageUrl} alt="" />
+                                                        <img className="mx-auto h-20 w-20 rounded-full xl:w-40 xl:h-40" src={imageUrl} alt="" />
                                                         <div className="font-medium text-lg leading-6 space-y-1">
-                                                            <h3 className="text-blue-500 mx-auto">{person.name}</h3>
+                                                            <h3 className="text-blue-500 mx-auto">{person.userName}</h3>
                                                         </div>
+                                                        {person.userId === admin.userId ? <span className="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">Admin</span> : <span className="px-2 py-1 text-green-800 text-xs font-medium bg-green-100 rounded-full">User</span>}
+                                                        {/* <span></span> */}
                                                     </div>
                                                 </li>
                                             ))}
@@ -198,9 +218,9 @@ export default function Example() {
                                 {/* Replace with your content */}
                                 <div className="">
                   <span className='flex' style={{ marginLeft: 300 }}>
-                  <img  src={require('../icons/MicImage.png')} className='w-30 h-15 mx-5'/>
-                  <img  src={require('../icons/EndIcon.png')} className='w-30 h-15 mx-5'/>
-                  <img  src={require('../icons/AddIcon.png')} className='w-30 h-15 mx-5'/>
+                  <Image  src={require('../icons/MicImage.png')} className='w-30 h-15 mx-5' alt='mic'/>
+                  <Image  src={require('../icons/EndIcon.png')} className='w-30 h-15 mx-5' alt='end'/>
+                  <Image  src={require('../icons/AddIcon.png')} className='w-30 h-15 mx-5' alt='add'/>
                   </span>
                 </div>
 

@@ -11,6 +11,7 @@ import {
 import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import SignalIcon from "../app/icons/SignalIcon";
+import { useAppSelector } from "@/app/hooks";
 
 const navigation = {
   categories: [
@@ -39,6 +40,7 @@ function classNames(...classes: string[]) {
 const Navbar = ({ openModal }: { openModal: () => void }) => {
   const [open, setOpen] = useState(false);
   const user = useSelector((state: RootState) => state.user);
+  const {roomId} = useAppSelector((state) => state.room);
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -207,14 +209,14 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
         >
           <div>
             <div className="h-16 flex items-center">
-              <button
+              {/* <button
                 type="button"
                 className="bg-blue-500 p-2 rounded-md text-yellow-400 lg:hidden"
                 onClick={() => setOpen(true)}
               >
                 <span className="sr-only">Open menu</span>
                 <MenuIcon className="h-6 w-6" aria-hidden="true" />
-              </button>
+              </button> */}
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
@@ -229,7 +231,7 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
               </div>
 
               {/* Flyout menus */}
-              <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
+              <Popover.Group className="  ml-8 lg:ml-8 lg:block lg:self-stretch">
                 <div className="h-full flex space-x-8">
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
@@ -249,7 +251,7 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
                             </Link>
                           </div>
 
-                          {/* <Transition
+                          <Transition
                             as={Fragment}
                             enter="transition ease-out duration-200"
                             enterFrom="opacity-0"
@@ -268,7 +270,7 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
                                 <div className="max-w-7xl mx-auto px-8">
                                   <div className="grid grid-cols-2 gap-y-10 gap-x-8 py-16">
                                     <div className="col-start-2 grid grid-cols-2 gap-x-8">
-                                      {category.featured.map((item) => (
+                                      {/* {category.featured.map((item) => (
                                         <div
                                           key={item.name}
                                           className="group relative text-base sm:text-sm"
@@ -297,10 +299,10 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
                                             Shop now
                                           </p>
                                         </div>
-                                      ))}
+                                      ))} */}
                                     </div>
                                     <div className="row-start-1 grid grid-cols-3 gap-y-10 gap-x-8 text-sm">
-                                      {category.sections.map((section) => (
+                                      {/* {category.sections.map((section) => (
                                         <div key={section.name}>
                                           <p
                                             id={`${section.name}-heading`}
@@ -328,33 +330,33 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
                                             ))}
                                           </ul>
                                         </div>
-                                      ))}
+                                      ))} */}
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             </Popover.Panel>
-                          </Transition> */}
+                          </Transition>
                         </>
                       )}
                     </Popover>
                   ))}
 
                   {navigation.pages.map((page) => (
-                    <a
+                    <Link
                       key={page.name}
                       href={page.href}
                       className="flex items-center text-sm font-medium text-white hover:text-orange-200"
                     >
                       {page.name}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </Popover.Group>
 
               <div className="ml-auto flex items-center">
                 {user.userId === "" && user.userName === "" && (
-                  <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                  <div className="lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                     <a
                       onClick={openModal}
                       className="text-sm font-medium text-white hover:text-orange-200"
@@ -377,7 +379,7 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
 
                     <div className="flex lg:ml-6">
                       <Link
-                            href={'/session'}
+                            href={roomId === '' ? '/session': '/MainSession'}
                         className="p-2 text-yellow-400 hover:text-gray-200"
                       >
                         <span className="sr-only">Search</span>

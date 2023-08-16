@@ -11,6 +11,7 @@ import {Provider} from 'react-redux'
 import {store} from './store'
 import { io } from 'socket.io-client'
 import ChatBox from '@/components/chat/ChatBox'
+import { useAppDispatch } from './hooks'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -30,6 +31,8 @@ export default function RootLayout({
 }) {
   
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  
 
   return (
     <html lang="en">
