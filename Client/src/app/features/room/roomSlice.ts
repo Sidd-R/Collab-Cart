@@ -8,20 +8,18 @@ const initialState: RoomState = {
   users: [],
 };
 
+
 export const roomSlice = createSlice({
   name: 'room',
   initialState,
   reducers: {
     createRoom: (state,action) => {
       state.roomId = action.payload.roomId;
-      state.admin =   action.payload.userId;
     },
     joinRoom: (state,action) => {
       state.roomId = action.payload;
     },
-    updateRoom: (state,action) => {
-      console.log("why ot ",action.payload);
-      
+    updateRoom: (state,action) => {      
       state.admin = action.payload.admin;
       state.users = action.payload.users;
     }

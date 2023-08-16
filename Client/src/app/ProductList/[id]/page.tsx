@@ -15,6 +15,10 @@ import {
 } from '@heroicons/react/outline'
 import { StarIcon } from '@heroicons/react/solid'
 import { productList } from "@/constants/productList"
+import { socket } from '@/app/layout';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
+import { updateCart } from '@/app/features/cart/cartSlice';
+import { CartState, Product } from '@/app/types';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -26,6 +30,8 @@ export default function Page({ params }: { params: { id: string } }) {
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [showModal,setShowModal]=useState(false)
   const [share,setShare]=useState(false)
+  const dispatch = useAppDispatch()
+  const {userName} = useAppSelector((state) => state.user)
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -83,7 +89,7 @@ export default function Page({ params }: { params: { id: string } }) {
 
               <div className="mt-3">
                 <h2 className="sr-only">Product information</h2>
-                <p className="text-3xl text-gray-900">{product.price}</p>
+                <p className="text-3xl text-gray-900">₹ {product.price}</p>
               </div>
 
               {/* Reviews */}
@@ -172,15 +178,30 @@ export default function Page({ params }: { params: { id: string } }) {
                   <Link href="/ShopCart">
                   <span
                     className="text-white bg-blue-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                    onClick={() => {
+                      const newProduct:Product = {
+                        productId: product.id,
+                        productName: product.name,
+                        price: product.price,
+                        quantity: 1,
+                        addedBy: userName,
+                        contributors: [],
+                        image: product.imageSrc,
+                      }
+                      socket.emit('addToCart',newProduct)
+                      // console.log('add to cart');
+                      setShowModal(false)
+                      
+                    }}
                   >
                     Add To Mutual Cart
                   </span>
                   </Link>
-                  <span
+                  <button
                     className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                   >
                     Add to Own Cart
-                  </span>
+                  </button>
                 </div>
               </div>
             </div>

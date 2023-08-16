@@ -5,15 +5,16 @@ import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/outline';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { socket } from '../layout';
-import { createRoom, joinRoom } from '../features/room/roomSlice';
+import { createRoom, joinRoom, updateRoom } from '../features/room/roomSlice';
 import { useRouter } from 'next/navigation';
+import { updateCart } from '../features/cart/cartSlice';
 
 export default function Example() {
   const [open, setOpen] = useState<boolean>(true);
   const [roomId, setRoomId] = useState<string>('');
   const [submit, setSubmit] = useState<boolean>(false);
 
-  const { userId, userName } = useAppSelector((state) => state.user);
+  const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   const router = useRouter();
@@ -22,8 +23,8 @@ export default function Example() {
 
   const create = () => {
     socket.connect();
-    socket.emit('createRoom', userId, userName, (roomId1: string) => {
-      dispatch(createRoom({ userId, roomId1 }));
+    socket.emit('createRoom', user, (roomId1: string) => {
+      dispatch(createRoom({ roomId1 }));
       setRoomId(roomId1);
       setSubmit(true);
     });
@@ -31,7 +32,7 @@ export default function Example() {
 
   const join = () => {
     socket.connect();
-    socket.emit('joinRoom', userId, userName, roomId);
+    socket.emit('joinRoom', user, roomId);
     dispatch(joinRoom(roomId));
     setRoomId('');
     setOpen(false);
@@ -41,6 +42,20 @@ export default function Example() {
     if (open == false) router.push('/MainSession');
   
   }, [open])
+
+  socket.on('updateRoom' , (room) => {
+    console.log("why not wprl");    
+    
+    dispatch(updateRoom(room))
+    // console.log(users,room);
+    
+  })
+
+  socket.on('updateCart' , (cart) => {
+      dispatch(updateCart({cart,userId:user.userId}))
+      console.log('update cart');
+      
+  })
   
 
   return (

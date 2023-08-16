@@ -27,7 +27,7 @@ const cart: CartState = {
   totalAmount: 0,
 };
 
-const messages: Array<Chat> = [];
+var messages: Array<Chat> = [];
 
 const addToCart = (product: Product) => {
   const existingItem = cart.products.find(
@@ -99,6 +99,26 @@ const contributeOff = (productId: string, userId: string) => {
   }
 }
 
+const contributeAll = (user:User) => {
+  cart.products.forEach((product: Product) => {
+    if (!product.contributors.find((user) => user.userId === user.userId)) {
+      product.contributors.push(user);
+    }
+  })
+}
+
+// remove user as a contributor in all products if the user is a contributor
+const contributeAllOff = (user: User) => {
+  cart.products.forEach((product: Product) => {
+    if (product.contributors.find((user1) => user1.userId === user.userId)) {
+      product.contributors = product.contributors.filter(
+        (user2) => user2.userId !== user.userId
+      );
+    }
+  })
+}
+
+
 const clearCart = () => {
   cart.products = [];
 };
@@ -108,7 +128,7 @@ io.on('connection', (socket: Socket) => {
 
   socket.on(
     'createRoom',
-    (userId: string, userName: string, getRoomId: (roomId: string) => void) => {
+    ({userName,userId}: User, getRoomId: (roomId: string) => void) => {
       const roomId = uuid().slice(0, 6); // create new room
       log('Room created with id', roomId, 'by user', userId);
       socket.join(roomId); // join admin to the new created room
@@ -120,15 +140,17 @@ io.on('connection', (socket: Socket) => {
       userSocket.set(socket.id, userId); // save user id and socket id
       cart.products = [];
       cart.totalAmount = 0;
+      messages = [];
     }
   );
 
-  socket.on('joinRoom', (userId: string, userName: string, roomId: string) => {
+  socket.on('joinRoom', ({userId, userName}:User, roomId: string) => {
     socket.join(roomId); // join user to the room
     console.log('User', userId, 'joined room', roomId);
 
     room.users?.push({ userId, userName }); // add user to the room
     io.to(roomId).emit('updateRoom', room); // broadcast user data to all users in the room
+    io.to(roomId).emit('updateCart', cart);
   });
 
   socket.on('leaveRoom', (userId: string, roomId: string) => {
@@ -171,12 +193,21 @@ io.on('connection', (socket: Socket) => {
     contributeOff(productId,userId);
     io.to(room.roomId).emit('updateCart', cart);
   });
+  socket.on('contributeAll', (user) => {
+    contributeAll(user);
+    io.to(room.roomId).emit('updateCart', cart);
+  });
+
+  socket.on('contributeAllOff', (user) => {
+    contributeAllOff(user);
+    io.to(room.roomId).emit('updateCart', cart);
+  });
 
   socket.on('sendChat', (chat) => {
     log('Chat received from', chat.userId, chat.userName,chat.message);
     messages.push(chat);
     io.
-    // to(room.roomId).
+    to(room.roomId).
     emit('updateChat', messages);
 
   })

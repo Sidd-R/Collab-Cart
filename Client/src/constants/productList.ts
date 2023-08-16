@@ -3,7 +3,7 @@ export const productList = [
   {
     id: '1',
     name: 'ZipToe Basket',
-    price: '$149',
+    price: 149,
     rating: 5,
     reviewCount: 38,
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg',
@@ -32,7 +32,7 @@ export const productList = [
   {
     id: '2',
     name: 'White Black Ziptoe Basket',
-    price: '$134',
+    price: 134,
     rating: 5,
     reviewCount: 18,
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-03-related-product-01.jpg',
@@ -61,7 +61,7 @@ export const productList = [
   {
     id: '3',
     name: 'Gray Blue Leather Bag',
-    price: '$175',
+    price: 175,
     rating: 5,
     reviewCount: 14,
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-03-related-product-02.jpg',
@@ -90,7 +90,7 @@ export const productList = [
   {
     id: '4',
     name: 'Nude Leather Modern Bag',
-    price: '$187',
+    price: 187,
     rating: 4,
     reviewCount: 21,
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-03-related-product-03.jpg',

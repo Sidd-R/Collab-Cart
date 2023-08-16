@@ -12,6 +12,7 @@ import {store} from './store'
 import { io } from 'socket.io-client'
 import ChatBox from '@/components/chat/ChatBox'
 import { useAppDispatch } from './hooks'
+import Footer from '@/components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -36,18 +37,14 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} >
         <Provider store={store}>
-           {/* <div className='relative mb-8 flex h-8 w-full max-w-[800px] items-center justify-between text-center'>
-              <ChatBox
-                // className='right-3 w-[calc(100%+0.5rem)] sm:right-2'
-                // label='public chat'
-              />
-            </div>  */}
-        <div className='min-h-[65vh] w-full font-primary'>
+        <ChatBox />
+        <div className='min-h-[65vh] w-full font-primary light'>
           <Navbar openModal={() => setIsModalOpen(true)} />
           <Floating/>
           {children}
+          <Footer/>
           <UserModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
         </Provider>
