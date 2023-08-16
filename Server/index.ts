@@ -206,7 +206,7 @@ io.on('connection', (socket: Socket) => {
     log('Chat received from', chat.userId, chat.userName,chat.message);
     messages.push(chat);
     io.
-    // to(room.roomId).
+    to(room.roomId).
     emit('updateChat', messages);
 
   })
