@@ -2,7 +2,8 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
-import { MicrophoneIcon, ChatAltIcon, ArrowsExpandIcon } from '@heroicons/react/solid';
+import {
+    MicrophoneIcon
     CalendarIcon,
     ChartBarIcon,
     ChatIcon,
@@ -19,7 +20,6 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import Image from 'next/image';
 import { socket } from '../layout';
 import { updateRoom } from '../features/room/roomSlice';
-import { updateCart } from '../features/cart/cartSlice';
 
 const navigation = [
     { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
@@ -56,19 +56,13 @@ export default function Example() {
     const {admin,users} = useAppSelector(state => state.room);
 
     // const {users} = useAppSelector(state => state.room)
-    // socket.on('updateRoom' , (room) => {
-    //     console.log("why not wprl");    
+    socket.on('updateRoom' , (room) => {
+        console.log("why not wprl");    
         
-    //   dispatch(updateRoom(room))
-    //   console.log(users,room);
+      dispatch(updateRoom(room))
+      console.log(users,room);
       
-    // })
-
-    // socket.on('updateCart' , (cart) => {
-    //     dispatch(updateCart(cart))
-    //     console.log('update cart');
-        
-    // })
+    })
 
 
     return (
@@ -211,7 +205,7 @@ export default function Example() {
                                             {users.map((person) => (
                                                 <li key={person.userId} className="py-10 px-4 bg-white text-center rounded-lg xl:px-2 ">
                                                     <div className="space-y-6 xl:space-y-5">
-                                                       <MicrophoneIcon className="h-2 w-2" aria-hidden="true" />
+                                                       <MicrophoneIcon className="h-2 w-" aria-hidden="true" />
                                                         <img className="mx-auto h-20 w-20 rounded-full xl:w-40 xl:h-40" src={imageUrl} alt="" />
                                                         <div className="font-medium text-lg leading-6 space-y-1">
                                                             <h3 className="text-blue-500 mx-auto">{person.userName}</h3>
