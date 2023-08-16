@@ -2,6 +2,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
+import { toggleChat, updateChat } from '@/app/features/chat/chatSlice';
 import {
     MicrophoneIcon,
     CalendarIcon,
@@ -20,12 +21,12 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import Image from 'next/image';
 import { socket } from '../layout';
 import { updateRoom } from '../features/room/roomSlice';
+import Link from "next/link";
 
 const navigation = [
-    { name: 'Dashboard', href: '#', icon: HomeIcon, current: true },
-    { name: 'Room Members', href: '#', icon: UsersIcon, current: false },
+    { name: 'Room Members', href: '#', icon: UsersIcon, current: true },
     { name: 'Chat', href: '#', icon: ChatIcon, current: false },
-    { name: 'Mutual Cart', href: '#', icon: ShoppingBagIcon, current: false },
+    { name: 'Mutual Cart', href: '/ShopCart', icon: ShoppingBagIcon, current: false },
     { name: 'Virtual Trial Room', href: '#', icon: SwitchVerticalIcon, current: false },
     { name: 'Poll', href: '#', icon: ChartBarIcon, current: false },
 ]
@@ -161,13 +162,14 @@ export default function Example() {
                         <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                             <nav className="mt-5 flex-1 px-2 space-y-1">
                                 {navigation.map((item) => (
-                                    <a
+                                    <Link
                                         key={item.name}
                                         href={item.href}
                                         className={classNames(
                                             item.current ? 'bg-blue-500 text-white' : 'text-yellow-300 hover:bg-blue-500 hover:text-whitw',
                                             'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
                                         )}
+                                        onClick={item.name === 'Chat' ? () => dispatch(toggleChat()) : undefined}
                                     >
                                         <item.icon
                                             className={classNames(
@@ -177,7 +179,7 @@ export default function Example() {
                                             aria-hidden="true"
                                         />
                                         {item.name}
-                                    </a>
+                                    </Link>
                                 ))}
                             </nav>
                         </div>

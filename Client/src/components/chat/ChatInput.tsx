@@ -2,6 +2,7 @@ import { useAppSelector } from "@/app/hooks";
 import { socket } from "@/app/layout";
 import SendIcon from '@/app/icons/SendIcon';
 import * as React from "react";
+import { Chat } from "@/app/types";
 
 const ChatInput = () => {
   const { userId, userName } = useAppSelector((state) => state.user);
@@ -13,7 +14,8 @@ const ChatInput = () => {
         const { value } = e.target[0];
         if (!value) return;
         e.target[0].value = "";
-        socket.emit("sendChat", { userId, userName, message: value });
+        const message: Chat = { userId, userName, message: value, type: 'message'};
+        socket.emit("sendChat", message);
       }}
       className="relative mx-auto w-full xs:pr-4"
     >

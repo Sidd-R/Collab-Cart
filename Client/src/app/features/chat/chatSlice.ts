@@ -20,6 +20,7 @@ export const chatSlice = createSlice({
       state.publicChat = action.payload;
       state.showNotification = true;
     }
+      
   },
 });
 
