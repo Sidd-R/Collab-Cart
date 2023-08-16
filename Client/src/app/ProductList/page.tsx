@@ -12,7 +12,7 @@ function classNames(...classes:string[]) {
 export default function Example() {
   return (
     <div className="bg-white">
-        <h1 className='text-xl font-medium text-gray-900 mt-8 mx-8'>Trending Bags</h1>
+        <h1 className='text-xl font-medium text-gray-900 mt-8 mx-8'>Trending Products</h1>
       <div className="max-w-7xl mx-auto overflow-hidden sm:px-6 lg:px-8 mt-4">
         <div className="-mx-px border-l border-gray-200 grid grid-cols-2 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
           {productList.map((product) => (
