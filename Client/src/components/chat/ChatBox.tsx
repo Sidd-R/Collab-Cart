@@ -9,6 +9,7 @@ import { socket } from '@/app/layout';
 export default function ChatBox() {
   const { isChatOpen, publicChat } = useAppSelector((state) => state.chat);
   const { userId } = useAppSelector((state) => state.user);
+  const { users } = useAppSelector((state) => state.room);
   const dispatch = useAppDispatch();
 
   const [isPublic, setIsPublic] = React.useState(false);
@@ -55,7 +56,7 @@ export default function ChatBox() {
             animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
             exit={{ opacity: 0 }}
             key="chat-box"
-            className={`absolute -bottom-[26rem] -right-4 z-40 flex h-[24.5rem] cursor-auto justify-between gap-4 rounded-lg bg-bg/30 p-4 ring ring-fg/60 ring-offset-2 ring-offset-bg bg-sky-900 bg-opacity-80 `}
+            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-40 flex h-50vh w-[100%] max-w-[500px] cursor-auto justify-between gap-4 rounded-lg bg-bg/30 p-4 ring ring-fg/60 ring-offset-2 ring-offset-bg bg-gray-100`}
           >
             <div className="flex h-full w-full flex-col justify-between ">
               <div className="flex justify-between">
@@ -71,16 +72,8 @@ export default function ChatBox() {
                       room
                     </button>
                   )} */}
-                  <button
-                    onClick={() => setIsPublic((isPublic) => !isPublic)}
-                    className={`rounded-lg px-2 py-1 transition-colors duration-200 ${
-                      isPublic || true ? 'bg-fg text-bg' : 'text-hl'
-                    }`}
-                  >
-                    public
-                  </button>
                 </div>
-                <span className="pr-4 text-sm text-fg xs:pr-6">8 online</span>
+                <span className="pr-4 text-sm text-fg text-gray-700 xs:pr-6">{users.length} online</span>
               </div>
               <div
                 ref={divRef}

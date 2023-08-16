@@ -15,9 +15,11 @@ export const roomSlice = createSlice({
     createRoom: (state,action) => {
       state.roomId = action.payload.roomId;
       state.admin =   action.payload.userId;
+      state.users.push(action.payload.userId);
     },
     joinRoom: (state,action) => {
       state.roomId = action.payload;
+      state.users.push(action.payload.userId);
     },
     updateRoom: (state,action) => {
       console.log("why ot ",action.payload);

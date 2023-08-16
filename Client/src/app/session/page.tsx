@@ -33,7 +33,7 @@ export default function Example() {
   const join = () => {
     socket.connect();
     socket.emit('joinRoom', userId, userName, roomId);
-    dispatch(joinRoom(roomId));
+    dispatch(joinRoom(roomId,userId));
     setRoomId('');
     setOpen(false);
   };
