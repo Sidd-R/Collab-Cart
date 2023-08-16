@@ -9,11 +9,12 @@ import {
   PlusSmIcon,
   SearchIcon,
   ShoppingBagIcon,
+  CameraIcon,
   UserIcon,
   XIcon,
   ShareIcon
 } from '@heroicons/react/outline'
-import { StarIcon } from '@heroicons/react/solid'
+import { StarIcon, TrashIcon } from '@heroicons/react/solid'
 import { productList } from "@/constants/productList"
 import { socket } from '@/app/layout';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
@@ -249,9 +250,18 @@ export default function Page({ params }: { params: { id: string } }) {
           </div>
         </>
       ) : null}
+      
+      <button
+                    type="button"
+                    className="ml-4 py-3 px-1 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-gray-200"
+                  >
+                    <Link href="/VirtualTrialRoom">
+                    <CameraIcon className="h-6 w-6 flex-shrink-0" aria-hidden="true" />
+                    </Link>
+                  </button>
                 </div>
               </div>
-
+                    
               <section aria-labelledby="details-heading" className="mt-12">
                 <h2 id="details-heading" className="sr-only">
                   Additional details
