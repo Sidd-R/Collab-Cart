@@ -41,6 +41,7 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
   const [open, setOpen] = useState(false);
   const user = useSelector((state: RootState) => state.user);
   const {roomId} = useAppSelector((state) => state.room);
+  const {length} = useAppSelector((state) => state.cart.products);
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -396,9 +397,9 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
                           className="flex-shrink-0 h-6 w-6 text-yellow-400 group-hover:text-gray-200"
                           aria-hidden="true"
                         />
-                        <span className="ml-2 text-sm font-medium text-white group-hover:text-orange-200">
-                          0
-                        </span>
+                        {length > 0?<span className="ml-2 text-xs font-semibold text-yellow-500 group-hover:text-orange-200 bg-white bg-opacity-950 rounded-full h-4 w-4 text-center -ml-3 mt-6">
+                          {length}
+                        </span>:null}
                         <span className="sr-only">items in cart, view bag</span>
                       </Link>
                     </div>
