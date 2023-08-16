@@ -274,7 +274,30 @@ const policies = [
     description:
       'We’ve pledged 1% of sales to the preservation and restoration of the natural environment.',
   },
-];
+]
+
+const people = [
+  {
+    name: 'Leonard Krasner',
+    imageUrl:
+      'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  },
+  {
+    name: 'Floyd Miles',
+    imageUrl:
+      'https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  },
+  {
+    name: 'Emily Selman',
+    imageUrl:
+      'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  },
+  {
+    name: 'Kristin Watson',
+    imageUrl:
+      'https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  },
+]
 const footerNavigation = {
   products: [
     { name: 'Bags', href: '#' },
@@ -473,7 +496,10 @@ export default function ShopCart() {
                             </Switch>
                           </span>
                         </p>
-                        <button className="my-1 text-blue-500 text-xs w-1/6 px-3 bg-yellow-300 border border-transparent rounded-md shadow-sm  text-base text-white hover:bg-yellow-400  ">
+                        <button 
+                        className="my-1 text-blue-500 text-xs w-1/6 px-3 bg-yellow-300 border border-transparent rounded-md shadow-sm  text-base text-white hover:bg-yellow-400  "
+                        onClick={()=>{setContriModal(true)}}
+                        >
                           Contributors
                         </button>
                       </div>
@@ -481,7 +507,38 @@ export default function ShopCart() {
                   ))}
                 </ul>
               </section>
-
+              {contriModal? (
+                <>
+          <div className="flex overflow-x-hidden overflow-y-auto fixed inset-0  ">
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+              <div className='flex justify-between mx-5 my-2'>
+              <span>Contributors</span>
+              <button onClick={()=>setContriModal(false)}>X</button>
+              </div>
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                <div className="flow-root mt-6">
+        <ul role="list" className="-my-5 divide-y divide-gray-200">
+          {people.map((person,i) => (
+            <li key={i} className="py-4">
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
+                  <img className="h-8 w-8 rounded-full" src={person.imageUrl} alt="" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">{person.name}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
               {/* Order summary */}
               <section
                 aria-labelledby="summary-heading"
