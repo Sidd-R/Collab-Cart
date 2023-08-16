@@ -4,9 +4,10 @@ type BubbleProps = {
   username?: string;
   value: string;
   isYou?: boolean;
+  type: 'product' | 'message'
 };
 
-const Bubble: React.FC<BubbleProps> = ({ username, value, isYou }) => {
+const Bubble: React.FC<BubbleProps> = ({ username, value, isYou, type }) => {
   return (
     <>
       {isYou ? (

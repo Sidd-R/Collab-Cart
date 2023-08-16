@@ -86,6 +86,7 @@ export default function ChatBox() {
                       isYou={chat.userId === userId}
                       value={chat.message}
                       username={chat.userName}
+                      type = {chat.type}
                     />
                   );
                 })}

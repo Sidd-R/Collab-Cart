@@ -1,7 +1,14 @@
-"use client";
-import { Fragment, useState } from 'react'
+'use client';
+import { Fragment, useState } from 'react';
 import Link from 'next/link';
-import { Dialog, Disclosure, Popover, RadioGroup, Tab, Transition } from '@headlessui/react'
+import {
+  Dialog,
+  Disclosure,
+  Popover,
+  RadioGroup,
+  Tab,
+  Transition,
+} from '@headlessui/react';
 import {
   HeartIcon,
   MenuIcon,
@@ -11,27 +18,28 @@ import {
   ShoppingBagIcon,
   UserIcon,
   XIcon,
-  ShareIcon
-} from '@heroicons/react/outline'
-import { StarIcon } from '@heroicons/react/solid'
-import { productList } from "@/constants/productList"
+  ShareIcon,
+} from '@heroicons/react/outline';
+import { StarIcon } from '@heroicons/react/solid';
+import { productList } from '@/constants/productList';
 import { socket } from '@/app/layout';
 import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import { updateCart } from '@/app/features/cart/cartSlice';
-import { CartState, Product } from '@/app/types';
+import { CartState, Chat, Product } from '@/app/types';
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ');
 }
 
 export default function Page({ params }: { params: { id: string } }) {
+  const product =
+    productList.find((product) => product.id === params.id) ?? productList[0];
+  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+  const [showModal, setShowModal] = useState(false);
+  const [share, setShare] = useState(false);
+  const dispatch = useAppDispatch();
+  const { userName,userId } = useAppSelector((state) => state.user);
   
-  const product = productList.find((product) => product.id === params.id) ?? productList[0]
-  const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  const [showModal,setShowModal]=useState(false)
-  const [share,setShare]=useState(false)
-  const dispatch = useAppDispatch()
-  const {userName} = useAppSelector((state) => state.user)
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -72,20 +80,22 @@ export default function Page({ params }: { params: { id: string } }) {
 
               <Tab.Panels className="w-full aspect-w-1 aspect-h-1">
                 {/* {product.images.map((image) => ( */}
-                  <Tab.Panel key={product?.id}>
-                    <img
-                      src={product?.imageSrc??""}
-                      alt={product?.imageAlt}
-                      className="w-full h-full object-center object-cover sm:rounded-lg"
-                    />
-                  </Tab.Panel>
+                <Tab.Panel key={product?.id}>
+                  <img
+                    src={product?.imageSrc ?? ''}
+                    alt={product?.imageAlt}
+                    className="w-full h-full object-center object-cover sm:rounded-lg"
+                  />
+                </Tab.Panel>
                 {/* ))} */}
               </Tab.Panels>
             </Tab.Group>
 
             {/* Product info */}
             <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
-              <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">{product.name}</h1>
+              <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
+                {product.name}
+              </h1>
 
               <div className="mt-3">
                 <h2 className="sr-only">Product information</h2>
@@ -101,7 +111,9 @@ export default function Page({ params }: { params: { id: string } }) {
                       <StarIcon
                         key={rating}
                         className={classNames(
-                          product.rating > rating ? 'text-blue-500' : 'text-gray-300',
+                          product.rating > rating
+                            ? 'text-blue-500'
+                            : 'text-gray-300',
                           'h-5 w-5 flex-shrink-0'
                         )}
                         aria-hidden="true"
@@ -126,8 +138,14 @@ export default function Page({ params }: { params: { id: string } }) {
                 <div>
                   <h3 className="text-sm text-gray-600">Color</h3>
 
-                  <RadioGroup value={selectedColor} onChange={setSelectedColor} className="mt-2">
-                    <RadioGroup.Label className="sr-only">Choose a color</RadioGroup.Label>
+                  <RadioGroup
+                    value={selectedColor}
+                    onChange={setSelectedColor}
+                    className="mt-2"
+                  >
+                    <RadioGroup.Label className="sr-only">
+                      Choose a color
+                    </RadioGroup.Label>
                     <div className="flex items-center space-x-3">
                       {product.colors.map((color) => (
                         <RadioGroup.Option
@@ -160,95 +178,106 @@ export default function Page({ params }: { params: { id: string } }) {
 
                 <div className="mt-10 flex sm:flex-col1">
                   <button
-                    onClick={()=>{setShowModal(true)}}
+                    onClick={() => {
+                      setShowModal(true);
+                    }}
                     className="max-w-xs flex-1 bg-blue-600 border border-transparent rounded-md py-3 px-3 flex items-center justify-center text-base font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500 sm:w-full"
                   >
                     Add to cart
                   </button>
                   {showModal ? (
-        <>
-          <div className="flex overflow-x-hidden overflow-y-auto fixed inset-0 ">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-              <div className='flex justify-between mx-5 my-2'>
-              <span>Add to Cart</span>
-              <button onClick={()=>setShowModal(false)}>X</button>
-              </div>
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-                  <Link href="/ShopCart">
-                  <span
-                    className="text-white bg-blue-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                    onClick={() => {
-                      const newProduct:Product = {
-                        productId: product.id,
-                        productName: product.name,
-                        price: product.price,
-                        quantity: 1,
-                        addedBy: userName,
-                        contributors: [],
-                        image: product.imageSrc,
-                      }
-                      socket.emit('addToCart',newProduct)
-                      // console.log('add to cart');
-                      setShowModal(false)
-                      
-                    }}
-                  >
-                    Add To Mutual Cart
-                  </span>
-                  </Link>
-                  <button
-                    className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                  >
-                    Add to Own Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      ) : null}
+                    <>
+                      <div className="flex overflow-x-hidden overflow-y-auto fixed inset-0 ">
+                        <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                            <div className="flex justify-between mx-5 my-2">
+                              <span>Add to Cart</span>
+                              <button onClick={() => setShowModal(false)}>
+                                X
+                              </button>
+                            </div>
+                            <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                              <Link href="/ShopCart">
+                                <span
+                                  className="text-white bg-blue-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                                  onClick={() => {
+                                    const newProduct: Product = {
+                                      productId: product.id,
+                                      productName: product.name,
+                                      price: product.price,
+                                      quantity: 1,
+                                      addedBy: userName,
+                                      contributors: [],
+                                      image: product.imageSrc,
+                                    };
+                                    socket.emit('addToCart', newProduct);
+                                    // console.log('add to cart');
+                                    setShowModal(false);
+                                  }}
+                                >
+                                  Add To Mutual Cart
+                                </span>
+                              </Link>
+                              <button className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1">
+                                Add to Own Cart
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : null}
                   <button
                     type="button"
                     className="ml-4 py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-gray-200"
                   >
-                    <HeartIcon className="h-6 w-6 flex-shrink-0" aria-hidden="true" />
+                    <HeartIcon
+                      className="h-6 w-6 flex-shrink-0"
+                      aria-hidden="true"
+                    />
                     <span className="sr-only">Add to favorites</span>
                   </button>
                   <button
-                    onClick={()=>{setShare(true)}}
+                    onClick={() => {
+                      setShare(true);
+                    }}
                     type="button"
                     className="ml py-2 px-2 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-gray-200"
                   >
-                     <ShareIcon className="h-6 w-6 flex-shrink-0" />
+                    <ShareIcon className="h-6 w-6 flex-shrink-0" />
                   </button>
                   {share ? (
-        <>
-          <div className="flex overflow-x-hidden overflow-y-auto fixed inset-0  ">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-              <div className='flex justify-between mx-5 my-2'>
-              <span>Share</span>
-              <button onClick={()=>setShare(false)}>X</button>
-              </div>
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-
-                  <span
-                    className="text-white bg-blue-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                  >
-                    Share in Live Chat
-                  </span>
-                  <span
-                    className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                  >
-                    Share via
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      ) : null}
+                    <>
+                      <div className="flex overflow-x-hidden overflow-y-auto fixed inset-0  ">
+                        <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                          <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                            <div className="flex justify-between mx-5 my-2 text-gray-500">
+                              <span>share</span>
+                              <button onClick={() => setShare(false)}>X</button>
+                            </div>
+                            <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                              <button className="text-white bg-blue-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                              onClick={() => {
+                                const message: Chat = {
+                                  userId,
+                                  userName,
+                                  message: product.id,
+                                  type: 'product',
+                                }
+                                socket.emit('sendChat', message);
+                              }}
+                              >
+                                Share in Live Chat
+                              </button>
+                              <button className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1">
+                                Share via
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  ) : null}
                 </div>
               </div>
 
@@ -287,7 +316,10 @@ export default function Page({ params }: { params: { id: string } }) {
                               </span>
                             </Disclosure.Button>
                           </h3>
-                          <Disclosure.Panel as="div" className="pb-6 prose prose-sm">
+                          <Disclosure.Panel
+                            as="div"
+                            className="pb-6 prose prose-sm"
+                          >
                             <ul role="list">
                               {detail.items.map((item) => (
                                 <li key={item}>{item}</li>
@@ -303,8 +335,14 @@ export default function Page({ params }: { params: { id: string } }) {
             </div>
           </div>
 
-          <section aria-labelledby="related-heading" className="mt-10 border-t border-gray-200 py-16 px-4 sm:px-0">
-            <h2 id="related-heading" className="text-xl font-bold text-gray-900">
+          <section
+            aria-labelledby="related-heading"
+            className="mt-10 border-t border-gray-200 py-16 px-4 sm:px-0"
+          >
+            <h2
+              id="related-heading"
+              className="text-xl font-bold text-gray-900"
+            >
               Customers also bought
             </h2>
 
@@ -345,8 +383,6 @@ export default function Page({ params }: { params: { id: string } }) {
           </section>
         </div>
       </main>
-
-      
     </div>
-  )
+  );
 }
