@@ -130,7 +130,7 @@ export default function Example() {
   <input type="file" id="images" accept="image/*" />
 </label>
 <Link href='/TriedImage'>
-<span className='text-white bg-blue-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"'>Submit</span>
+<span className='text-white bg-blue-500 mx-2 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"'>Submit</span>
 </Link>
                     </form>
                   </div>

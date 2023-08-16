@@ -1,8 +1,13 @@
 "use Client";
 import Image from "next/image";
+import {useState} from 'react'
 export default function ShopCart() {
+    const [load,setLoad]=useState(true)
+    let i=0
     return(
-        <div className="items-center justify-center ">
+        <div>
+        {load?
+        (<div className="items-center justify-center ">
         <div className="flex items-center mt-16 mx-32 justify-center">
             <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">Virtual Fitting</h1>
         </div>
@@ -16,6 +21,8 @@ export default function ShopCart() {
                 <div className=" flex justify-center">
                 <span className='text-white bg-blue-500 active:bg-yellow-700 font-bold uppercase text-sm mt-8 px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"'>Share in Session</span>
                 </div>
+                </div>) : null //delay loop
+}
                 </div>
     )
 }

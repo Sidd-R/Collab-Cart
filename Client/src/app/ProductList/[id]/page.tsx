@@ -279,6 +279,15 @@ export default function Page({ params }: { params: { id: string } }) {
                       </div>
                     </>
                   ) : null}
+                  <button
+                
+                    type="button"
+                    className="ml py-2 px-2 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-gray-200"
+                  >
+                    <Link href='/VirtualTrialRoom'>
+                    <CameraIcon className="h-6 w-6 flex-shrink-0" />
+                    </Link>
+                  </button>
                 </div>
               </div>
                     
