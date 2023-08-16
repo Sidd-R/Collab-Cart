@@ -114,7 +114,7 @@ export default function Page({ params }: { params: { id: string } }) {
                 />
               </div>
 
-              <form className="mt-6">
+              <div className="mt-6">
                 {/* Colors */}
                 <div>
                   <h3 className="text-sm text-gray-600">Color</h3>
@@ -153,7 +153,6 @@ export default function Page({ params }: { params: { id: string } }) {
 
                 <div className="mt-10 flex sm:flex-col1">
                   <button
-                    type="submit"
                     onClick={()=>{setShowModal(true)}}
                     className="max-w-xs flex-1 bg-blue-600 border border-transparent rounded-md py-3 px-3 flex items-center justify-center text-base font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500 sm:w-full"
                   >
@@ -166,7 +165,7 @@ export default function Page({ params }: { params: { id: string } }) {
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
               <div className='flex justify-between mx-5 my-2'>
               <span>Add to Cart</span>
-              <button onClick={()=>setShare(false)}>X</button>
+              <button onClick={()=>setShowModal(false)}>X</button>
               </div>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                   
@@ -229,7 +228,7 @@ export default function Page({ params }: { params: { id: string } }) {
         </>
       ) : null}
                 </div>
-              </form>
+              </div>
 
               <section aria-labelledby="details-heading" className="mt-12">
                 <h2 id="details-heading" className="sr-only">
