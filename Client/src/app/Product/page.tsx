@@ -1,3 +1,4 @@
+"use client";
 import { Fragment, useState } from 'react'
 import { Dialog, Disclosure, Popover, RadioGroup, Tab, Transition } from '@headlessui/react'
 import {
@@ -282,6 +283,7 @@ function classNames(...classes: string[]) {
 export default function Product() {
   const [open, setOpen] = useState(false)
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
+  const [cart,setCart]=useState(false)
 
   return (
     <div className="bg-white">
@@ -411,11 +413,10 @@ export default function Product() {
                 <div className="mt-10 flex sm:flex-col1">
                   <button
                     type="submit"
-                    className="max-w-xs flex-1 bg-blue-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500 sm:w-full"
+                    className="max-w-xs flex-1 bg-blue-600 border border-transparent rounded-md py-3 px-3 flex items-center justify-center text-base font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500 sm:w-full"
                   >
-                    Add to bag
+                    Add to cart
                   </button>
-
                   <button
                     type="button"
                     className="ml-4 py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-gray-200"

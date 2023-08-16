@@ -67,7 +67,7 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
             leaveFrom="translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <div className="relative max-w-xs w-full bg-blue-500 text-yellow shadow-xl pb-12 flex flex-col overflow-y-auto">
+            <div className="relative max-w-xs w-full bg-blue-500 text-yellow shadow-xl pb-12 flex flex-col overflow-y-auto" style={{paddingTop: 20}}>
               <div className="px-4 pt-5 pb-2 flex">
                 <button
                   type="button"
@@ -364,23 +364,23 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
 
                   <>
                     <div className="flex lg:ml-6">
-                      <a
-                        href="#"
+                      <Link
+                            href={'/ProductList'}
                         className="p-2 text-yellow-400 hover:text-gray-200"
                       >
                         <span className="sr-only">Room</span>
                         <SearchIcon className="w-6 h-6" aria-hidden="true" />
-                      </a>
+                      </Link>
                     </div>
 
                     <div className="flex lg:ml-6">
-                      <a
-                        href="#"
+                      <Link
+                            href={'/session'}
                         className="p-2 text-yellow-400 hover:text-gray-200"
                       >
                         <span className="sr-only">Search</span>
                         <SignalIcon aria-hidden="true" />
-                      </a>
+                      </Link>
                     </div>
 
                     <div className="ml-2 flow-root lg:ml-6">

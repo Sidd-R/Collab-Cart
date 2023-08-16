@@ -35,15 +35,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Provider store={store}>
-        <div className='min-h-[65vh] w-full  pt-10  font-primary'>
-            <div className='relative mb-8 flex h-8 w-full max-w-[800px] items-center justify-between text-center'>
+           {/* <div className='relative mb-8 flex h-8 w-full max-w-[800px] items-center justify-between text-center'>
               <ChatBox
                 // className='right-3 w-[calc(100%+0.5rem)] sm:right-2'
                 // label='public chat'
               />
-            </div>
-
-
+            </div>  */}
+        <div className='min-h-[65vh] w-full font-primary'>
           <Navbar openModal={() => setIsModalOpen(true)} />
           <Floating/>
           {children}
