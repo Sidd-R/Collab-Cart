@@ -28,7 +28,7 @@ export type Chat = {
   userId: string;
   userName: string;
   message: string;
-  type: 'product'|'message';
+  type: 'product'|'message'|'tryOn';
 }
 
 export type ChatState = {
