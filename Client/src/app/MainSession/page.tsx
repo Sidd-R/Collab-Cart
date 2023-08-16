@@ -196,7 +196,7 @@ export default function Example() {
                             <MenuIcon className="h-6 w-6" aria-hidden="true" />
                         </button>
                     </div>
-                    <main className="flex-1 bg-gray-200 h-600">
+                    <main className="flex-1 bg-gray-200 min-h-screen ">
                         <div className="py-4 h-full">
                             <div className="flex items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                                 <h1 className="flex text-4xl font-semibold text-gray-900 items-center ">Virtual Shopping Room</h1>
@@ -221,7 +221,7 @@ export default function Example() {
                                 </div>
                                 {/* Replace with your content */}
                                 <div className="">
-                  <span className='flex' style={{ marginLeft: 300 }}>
+                  <span className='flex justify-center items-center'>
                   <Image  src={require('../icons/MicImage.png')} className='w-30 h-15 mx-5' alt='mic'/>
                   <Image  src={require('../icons/EndIcon.png')} className='w-30 h-15 mx-5' alt='end'/>
                   <Image  src={require('../icons/AddIcon.png')} className='w-30 h-15 mx-5' alt='add'/>
