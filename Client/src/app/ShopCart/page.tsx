@@ -282,6 +282,7 @@ export default function ShopCart() {
   const [open, setOpen] = useState(false)
   const {userId} = useAppSelector(state => state.user)
   // const {products,totalAmount} = useAppSelector(state => state.cart)
+  const [contriModal,setContriModal]=useState(false)
 
   return (
     <div className="bg-white">
