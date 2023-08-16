@@ -13,8 +13,7 @@ import { updateCart } from '../features/cart/cartSlice';
 
 export default function Example() {
   const [open, setOpen] = useState<boolean>(true);
-  const [roomId, setRoomId] = useState<string>('');
-  const [submit, setSubmit] = useState<boolean>(false);
+  
 
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
@@ -23,41 +22,6 @@ export default function Example() {
 
   const cancelButtonRef = useRef(null);
 
-  const create = () => {
-    socket.connect();
-    socket.emit('createRoom', user, (roomId1: string) => {
-      dispatch(createRoom({ roomId1 }));
-      setRoomId(roomId1);
-      setSubmit(true);
-    });
-  };
-
-  const join = () => {
-    socket.connect();
-    socket.emit('joinRoom', user, roomId);
-    dispatch(joinRoom(roomId));
-    setRoomId('');
-    setOpen(false);
-  };
-
-  useEffect(() => {
-    if (open == false) router.push('/MainSession');
-  
-  }, [open])
-
-  socket.on('updateRoom' , (room) => {
-    console.log("why not wprl");    
-    
-    dispatch(updateRoom(room))
-    // console.log(users,room);
-    
-  })
-
-  socket.on('updateCart' , (cart) => {
-      dispatch(updateCart({cart,userId:user.userId}))
-      console.log('update cart');
-      
-  })
   
 
   return (
@@ -130,7 +94,7 @@ export default function Example() {
   <input type="file" id="images" accept="image/*" />
 </label>
 <Link href='/TriedImage'>
-<span className='text-white bg-blue-500 mx-2 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"'>Submit</span>
+<span className='text-white bg-blue-500 mx-2 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"'>Submit</span>
 </Link>
                     </form>
                   </div>
