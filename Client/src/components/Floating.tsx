@@ -1,7 +1,10 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { MicrophoneIcon, ChatAltIcon, ArrowsExpandIcon } from '@heroicons/react/solid';
+import { toggleChat, updateChat } from '@/app/features/chat/chatSlice';
+import { useAppDispatch, useAppSelector } from '@/app/hooks';
 import Link from 'next/link';
 export default function Example() {
+  const dispatch = useAppDispatch();
   return (
     <div className="fixed bottom-4 right-4 z-50">
       <span className="relative z-0 inline-flex shadow-sm rounded-md">
@@ -13,6 +16,7 @@ export default function Example() {
           <MicrophoneIcon className="h-10 w-10" aria-hidden="true" />
         </button>
         <button
+          onClick={() => dispatch(toggleChat())}
           type="button"
           className="-ml-px relative inline-flex items-center px-2 py-2 bg-blue-500 text-sm font-medium text-yellow-400 hover:bg-blue-400 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
         >

@@ -15,9 +15,17 @@ const config: Config = {
       },
     },
   },
+  daisyui: {
+    themes: [
+      {
+        themes:["light"],
+      },
+    ],
+  },
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/aspect-ratio'),
+    require("daisyui"),
   ],
 }
 export default config
