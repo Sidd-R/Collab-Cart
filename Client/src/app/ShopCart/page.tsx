@@ -243,7 +243,8 @@ export default function ShopCart() {
                         </p>
                         <button
                           className="my-1 text-blue-500 text-xs w-1/6 px-3 bg-yellow-300 border border-transparent rounded-md shadow-sm  text-base text-white hover:bg-yellow-400  "
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.preventDefault();
                             setContributors(product.contributors);
                             setContriModal(true);
                           }}
@@ -261,6 +262,7 @@ export default function ShopCart() {
                                   </div>
                                   <div className="flex p-6 border-t border-solid border-blueGray-200 rounded-b ">
                                     <div className="flow-root">
+                                      {product.contributors.length > 0 ? (
                                       <ul role="list" className="-my-5 divide-y divide-gray-200">
                                         {product.contributors.map((person, i) => (
                                           <li key={i} className="py-4">
@@ -275,6 +277,7 @@ export default function ShopCart() {
                                           </li>
                                         ))}
                                       </ul>
+                                      ):(<p>No contributors</p>)}
                                     </div>
                                   </div>
                                 </div>
@@ -287,7 +290,7 @@ export default function ShopCart() {
                   ))}
                 </ul>
               </section>
-              {contriModal ? (
+              {/* {contriModal ? (
                 <>
                   <div className="flex overflow-x-hidden overflow-y-auto fixed inset-0  ">
                     <div className="relative w-auto my-6 mx-auto max-w-3xl">
@@ -309,7 +312,7 @@ export default function ShopCart() {
                                     <li key={i} className="py-4">
                                       <div className="flex items-center space-x-4">
                                         <div className="flex-shrink-0">
-                                          <img
+                                          <Image
                                             className="h-8 w-8 rounded-full"
                                             src={imageUrl}
                                             alt=""
@@ -331,7 +334,7 @@ export default function ShopCart() {
                     </div>
                   </div>
                 </>
-              ) : null}
+              ) : null} */}
               {/* Order summary */}
               <section
                 aria-labelledby="summary-heading"
@@ -361,7 +364,7 @@ export default function ShopCart() {
                 </div>
                 <div className="mt-10">
                   <button
-                    type="submit"
+                    // type="submit"
                     className="w-full bg-blue-500 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
                   >
                     Checkout
