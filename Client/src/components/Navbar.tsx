@@ -17,10 +17,12 @@ const navigation = {
     {
       id: "women",
       name: "Home",
+      href: "/",
     },
     {
       id: "men",
       name: "products",
+      href: '/ProductList'
      
     },
   ],
@@ -181,18 +183,18 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
                 </Tab.Panels> */}
               </Tab.Group>
 
-              <div className="border-t border-gray-200 py-6 px-4 space-y-6">
+              {/* <div className="border-t border-gray-200 py-6 px-4 space-y-6">
                 {navigation.pages.map((page) => (
                   <div key={page.name} className="flow-root">
                     <a
                       href={page.href}
                       className="-m-2 p-2 block font-medium text-white"
                     >
-                      {page.name}
+                      {page.name}kkk
                     </a>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
           </Transition.Child>
         </Dialog>
@@ -235,7 +237,7 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
                         <>
                           <div className="relative flex">
                             <Link
-                            href={'/'}
+                            href={category.href}
                               className={classNames(
                                 open
                                   ? "border-indigo-600 text-indigo-600"

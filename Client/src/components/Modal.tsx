@@ -4,6 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Provider, useDispatch } from "react-redux";
 import { AppDispatch } from "../app/store";
 import { addUser } from "../app/features/user/userSlice";
+import {v4 as uuidv4} from 'uuid';
 
 interface Props {
   isOpen: boolean;
@@ -12,11 +13,13 @@ interface Props {
 }
 
 const UserModal: React.FC<Props> = ({ isOpen, onClose }) => {
-  const [userId, setUserId] = useState("");
+  // const [userId, setUserId] = useState("");
   const [userName, setUserName] = useState("");
 
   const dispatch = useDispatch<AppDispatch>();
   const handleSave = () => {
+    
+    const userId = uuidv4().slice(0,6);
     dispatch(
       addUser({
         userId: userId,
@@ -83,7 +86,7 @@ const UserModal: React.FC<Props> = ({ isOpen, onClose }) => {
                     >
                       Add User
                     </Dialog.Title>
-                    <div className="mt-2">
+                    {/* <div className="mt-2">
                       <label
                         htmlFor="userId"
                         className="block text-sm font-medium text-gray-700"
@@ -98,7 +101,7 @@ const UserModal: React.FC<Props> = ({ isOpen, onClose }) => {
                         onChange={(e) => setUserId(e.target.value)}
                         className="mt-1 p-2 border text-gray-700 border-gray-300 rounded-md w-full"
                       />
-                    </div>
+                    </div> */}
                     <div className="mt-2">
                       <label
                         htmlFor="userName"

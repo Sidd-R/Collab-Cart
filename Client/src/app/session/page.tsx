@@ -1,11 +1,12 @@
 /* This example requires Tailwind CSS v2.0+ */
 'use client';
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef, useState, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { CheckIcon } from '@heroicons/react/outline';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { socket } from '../layout';
 import { createRoom, joinRoom } from '../features/room/roomSlice';
+import { useRouter } from 'next/navigation';
 
 export default function Example() {
   const [open, setOpen] = useState<boolean>(true);
@@ -14,6 +15,8 @@ export default function Example() {
 
   const { userId, userName } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+
+  const router = useRouter();
 
   const cancelButtonRef = useRef(null);
 
@@ -33,6 +36,12 @@ export default function Example() {
     setRoomId('');
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (open == false) router.push('/MainSession');
+  
+  }, [open])
+  
 
   return (
     <div className="bg-white">
