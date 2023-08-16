@@ -1,18 +1,19 @@
-  "use client";
-  import { Fragment, useState } from 'react'
-  import { Dialog, Disclosure, Popover, RadioGroup, Tab, Transition } from '@headlessui/react'
-  import {
-    HeartIcon,
-    MenuIcon,
-    MinusSmIcon,
-    PlusSmIcon,
-    SearchIcon,
-    ShoppingBagIcon,
-    UserIcon,
-    XIcon,
-    ShareIcon
-  } from '@heroicons/react/outline'
-  import { StarIcon } from '@heroicons/react/solid'
+"use client";
+import { Fragment, useState } from 'react'
+import Link from 'next/link';
+import { Dialog, Disclosure, Popover, RadioGroup, Tab, Transition } from '@headlessui/react'
+import {
+  HeartIcon,
+  MenuIcon,
+  MinusSmIcon,
+  PlusSmIcon,
+  SearchIcon,
+  ShoppingBagIcon,
+  UserIcon,
+  XIcon,
+  ShareIcon
+} from '@heroicons/react/outline'
+import { StarIcon } from '@heroicons/react/solid'
 
 
 const navigation = {
@@ -284,8 +285,8 @@ function classNames(...classes: string[]) {
 export default function Product() {
   const [open, setOpen] = useState(false)
   const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  const [cart,setCart]=useState(false)
-
+  const [showModal,setShowModal]=useState(false)
+  const [share,setShare]=useState(false)
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -413,11 +414,36 @@ export default function Product() {
 
                 <div className="mt-10 flex sm:flex-col1">
                   <button
-                    type="submit"
                     className="max-w-xs flex-1 bg-blue-600 border border-transparent rounded-md py-3 px-3 flex items-center justify-center text-base font-medium text-white hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-blue-500 sm:w-full"
+                    onClick={()=>{setShowModal(true)}}
                   >
                     Add to cart
                   </button>
+                  {showModal ? (
+        <>
+          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0  ">
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                  
+                  <span
+                    className="text-white bg-blue-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                  >
+                    Add To Mutual Cart
+                  </span>
+                  
+                  <span
+                    className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                  >
+                    Add to Own Cart
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
+
                   <button
                     type="button"
                     className="ml-4 py-3 px-3 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-gray-200"
@@ -428,10 +454,35 @@ export default function Product() {
                   <button
                     type="button"
                     className="ml py-2 px-2 rounded-md flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-gray-200"
+                    onClick={()=>{setShare(true)}}
                   >
                      <ShareIcon className="h-6 w-6 flex-shrink-0" />
                     <span className="sr-only">Add to favorites</span>
                   </button>
+                  {share ? (
+        <>
+          <div className="flex overflow-x-hidden overflow-y-auto fixed inset-0  ">
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+
+                  <span
+                    className="text-white bg-blue-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                  >
+                    Share in Live Chat
+                  </span>
+                  <span
+                    className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                  >
+                    Share via
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
+                  
                 </div>
               </form>
 
