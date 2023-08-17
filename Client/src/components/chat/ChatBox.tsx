@@ -56,7 +56,7 @@ export default function ChatBox() {
             animate={{ opacity: 1, y: 0, x: 0, scale: 1 }}
             exit={{ opacity: 0 }}
             key="chat-box"
-            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-40 flex h-50vh w-[100%] max-w-[500px] cursor-auto justify-between gap-4 rounded-lg bg-bg/30 p-4 ring ring-fg/60 ring-offset-2 ring-offset-bg bg-gray-100`}
+            className={`absolute top-24 left-7 transform -translate-x-1/2 -translate-y-1/2 z-40 flex h-50vh w-[100%] max-w-[500px] cursor-auto justify-between gap-4 rounded-lg bg-bg/30 p-4 ring ring-fg/60 ring-offset-2 ring-offset-bg bg-gray-100`}
           >
             <div className="flex h-full w-full flex-col justify-between ">
               <div className="flex justify-between">

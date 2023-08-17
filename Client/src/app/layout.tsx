@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   
 }
 
-export const socket = io('http://localhost:5000',
+export const socket = io('https://collabcart.onrender.com',
 {autoConnect: false, }
 )
 

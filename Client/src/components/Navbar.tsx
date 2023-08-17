@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/app/store";
 import SignalIcon from "../app/icons/SignalIcon";
 import { useAppSelector } from "@/app/hooks";
+import Image from "next/image";
 
 const navigation = {
   categories: [
@@ -223,9 +224,9 @@ const Navbar = ({ openModal }: { openModal: () => void }) => {
               <div className="ml-4 flex lg:ml-0">
                 <a href="#">
                   <span className="sr-only">Workflow</span>
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                  <Image
+                    className="h-10 w-auto"
+                    src={require("../app/icons/logo.png.png")}
                     alt=""
                   />
                 </a>

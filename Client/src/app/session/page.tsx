@@ -31,6 +31,8 @@ export default function Example() {
   };
 
   const join = () => {
+    console.log("hello");
+    
     socket.connect();
     socket.emit('joinRoom', user, roomId);
     dispatch(joinRoom(roomId));
