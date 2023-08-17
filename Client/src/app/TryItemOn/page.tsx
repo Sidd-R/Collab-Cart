@@ -18,9 +18,6 @@ export default function ShopCart() {
                   className="contain h-auto w-48 justify-center"
                 />
                 </div>
-                <div className=" flex justify-center">
-                <span className='text-white bg-blue-500 active:bg-yellow-700 font-bold uppercase text-sm mt-8 px-6 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"'>Share in Session</span>
-                </div>
                 </div>) : null //delay loop
 }
                 </div>

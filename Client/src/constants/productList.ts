@@ -3,7 +3,7 @@ export const productList = [
   {
     id: '1',
     name: 'ZipToe Basket',
-    price: 149,
+    price: 1500,
     rating: 5,
     reviewCount: 38,
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-03-product-01.jpg',
@@ -32,7 +32,7 @@ export const productList = [
   {
     id: '2',
     name: 'White Black Ziptoe Basket',
-    price: 134,
+    price: 1800,
     rating: 5,
     reviewCount: 18,
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-03-related-product-01.jpg',
@@ -61,7 +61,7 @@ export const productList = [
   {
     id: '3',
     name: 'Gray Blue Leather Bag',
-    price: 175,
+    price: 3000,
     rating: 5,
     reviewCount: 14,
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-03-related-product-02.jpg',
@@ -90,7 +90,7 @@ export const productList = [
   {
     id: '4',
     name: 'Nude Leather Modern Bag',
-    price: 187,
+    price: 2700,
     rating: 4,
     reviewCount: 21,
     imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-03-related-product-03.jpg',
@@ -119,7 +119,7 @@ export const productList = [
   {
     id: '5',
     name: 'Barcelona Jersey',
-    price: 54,
+    price: 1000,
     rating: 4,
     reviewCount: 16,
     imageSrc: 'https://zealevince.com/wp-content/uploads/2022/09/Barcelona-Home-Long-Sleeve-Jersey-22-23-Season-Premium-scaled-300x400.jpg',
@@ -142,7 +142,7 @@ export const productList = [
   {
     id: '6',
     name: 'Machester United Jersey',
-    price: 56,
+    price: 1200,
     rating: 5,
     reviewCount: 21,
     imageSrc: 'https://indiansoccermart.in/cdn/shop/files/dbcf9d97c4429197741e1ac8cc624f1c_grande.png?v=1688548675',
@@ -168,7 +168,7 @@ export const productList = [
   {
     id: '7',
     name: 'Indian Football Jersey',
-    price: 37,
+    price: 800,
     rating: 5,
     reviewCount: 45,
     imageSrc: 'https://the-aiff.com/media/uploads/2021/01/Panthera-Tigris-Home-Jersey-1.png',
@@ -194,7 +194,7 @@ export const productList = [
   {
     id: '8',
     name: 'Manchester City Jersey',
-    price: 58,
+    price: 1200,
     rating: 5,
     reviewCount: 18,
     imageSrc: 'https://talkfootball.in/wp-content/uploads/2023/02/Manchester-City-Home-Jersey-2022-23-Online-India.jpeg',
