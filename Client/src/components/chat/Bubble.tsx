@@ -6,7 +6,7 @@ type BubbleProps = {
   username?: string;
   value: string;
   isYou?: boolean;
-  type: "product" | "message";
+  type: "product" | "message" | 'tryOn';
 };
 
 const Bubble: React.FC<BubbleProps> = ({ username, value, isYou, type }) => {
